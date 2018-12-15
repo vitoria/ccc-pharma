@@ -25,6 +25,10 @@ class Authetication extends Component {
         this.props.cookies.get('ccc-pharma-token') && this.props.history.push('/')
     }
 
+    componentDidUpdate = () => {
+        this.props.cookies.get('ccc-pharma-token') && this.props.history.push('/')
+    }
+
     render() {
         return (
             <Router>

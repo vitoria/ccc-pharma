@@ -26,7 +26,7 @@ class Login extends Component {
     handleLogin = event => {
         event.preventDefault()
         this.props.cookies.set('ccc-pharma-token', TOKEN)
-        window.location.reload('/')
+        this.props.history.push('/')
     } 
 
     onChangePassword = event => {
