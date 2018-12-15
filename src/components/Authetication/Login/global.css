@@ -1,4 +1,4 @@
-#login form {
+ form {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -9,11 +9,11 @@
     margin-bottom: 1em;
 }
 
-#login form * {
+ form * {
     margin: .5em;
 }
 
-#login label {
+label {
     align-self: self-start;
 }
 
@@ -40,7 +40,7 @@ input[type=submit]:hover {
     background-color: #45a049;
 }
 
-#login button {
+button {
     width: 100%;
     padding: 14px 20px;
     background-color: transparent;

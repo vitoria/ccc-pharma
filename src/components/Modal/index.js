@@ -6,7 +6,9 @@ class Modal extends Component {
     render() {
         return (
             <div id="modalContainer">
-                <div id="modal"></div>
+                <div id="modal">
+                    {this.props.children}
+                </div>
             </div>
         )
     }
