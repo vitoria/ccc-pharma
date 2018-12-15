@@ -43,7 +43,7 @@ class Login extends Component {
                         value={this.state.password}
                         onChange={this.onChangePassword}
                     />
-                    <input type="submit" value="Entrar"></input>
+                    <input type="submit" value="ENTRAR"></input>
                 </form>
                 <Link to={{ pathname: "/register" }}>Cadastrar</Link>
             </div>
