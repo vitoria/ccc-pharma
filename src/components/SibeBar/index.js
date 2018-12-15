@@ -13,7 +13,7 @@ export default class SideBar extends Component {
     render() {
         const { selected } = this.state
         return (
-            <nav>
+            <nav className={`${this.props.isOpen ? 'drawer-in' : 'drawer-out'}`}>
                 <Link
                     to={{ pathname: "/" }}
                     onClick={() => this.setState({selected: 0})}

@@ -4,7 +4,6 @@ import { instanceOf, PropTypes } from 'prop-types'
 import { withCookies, Cookies } from 'react-cookie'
 
 import Header from './components/Header/index'
-import SideBar from './components/SibeBar/index'
 import Products from './components/Products/index'
 import Container from './components/Container/index'
 import Authetication from './components/Authetication/index'
@@ -27,7 +26,6 @@ class App extends Component {
           <Fragment>
             <Header/>
             <Container>
-              <SideBar/>
               <Products/>
             </Container>
           </Fragment>
@@ -36,7 +34,6 @@ class App extends Component {
           <Fragment>
             <Header/>
             <Container>
-              <SideBar/>
               Home
             </Container>
           </Fragment>
