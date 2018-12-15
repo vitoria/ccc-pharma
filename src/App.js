@@ -21,20 +21,20 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Route path="/login" component={Authetication} />
-        <Route path="/products" render={() => (
-          <Fragment>
-            <Header/>
-            <Container>
-              <Products/>
-            </Container>
-          </Fragment>
-        )}/>
-        <Route exact path="/" render={() => (
+      <Route exact path="/" render={() => (
           <Fragment>
             <Header/>
             <Container>
               Home
+            </Container>
+          </Fragment>
+        )}/>
+        <Route exact path="/login" component={Authetication} />
+        <Route exact path="/products" render={() => (
+          <Fragment>
+            <Header/>
+            <Container>
+              <Products/>
             </Container>
           </Fragment>
         )}/>
