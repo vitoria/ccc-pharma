@@ -19,12 +19,6 @@ class App extends Component {
     })
   }
 
-  getToken = () => this.props.cookies.get('ccc-pharma-token')
-
-  componentDidMount = () => {
-    this.getToken() ? this.props.history.push('/') : this.props.history.push('/login')
-  }
-
   render() {
     return (
       <div className="App">

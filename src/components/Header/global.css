@@ -4,8 +4,19 @@ header {
     position: fixed;
     width: 100%;
     display: grid;
+    grid-template-columns: 1fr 2.5fr 1fr;
+    grid-gap: 1.5em;
     background-color: steelblue;
     color: white;
     padding: 1.5em;
-    box-shadow: 2px 2px 4px 2px rgba( 0, 0, 0, .2 );
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+header > #authBtn {
+    grid-column: 3 / 3;
+    justify-self: end;
 }
