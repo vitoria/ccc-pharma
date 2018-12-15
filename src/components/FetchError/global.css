@@ -8,9 +8,10 @@
 #errorContainer > button {
     background-color: transparent;
     color: red;
-    border: 1px solid red;
+    border: 1.25px solid red;
     border-radius: 2px;
     padding: .5em;
+    font-weight: bold;
 }
 
 #errorContainer > button:hover {
