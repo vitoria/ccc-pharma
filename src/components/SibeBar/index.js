@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import { map } from 'ramda'
 
 import './global.css'
@@ -18,7 +19,7 @@ export default class SideBar extends Component {
     render() {
         return (
             <nav>
-                { map(option => <span>{option.name}</span>, options) }
+                { map(option => <Link to={{pathname:"/2"}}><span>{option.name}</span></Link>, options) }
             </nav>
         )
     }
