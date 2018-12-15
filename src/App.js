@@ -22,7 +22,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Route exact path="/" render={() => (
+        <Route path="/login" component={Authetication} />
+        <Route path="/products" render={() => (
           <Fragment>
             <Header/>
             <Container>
@@ -31,7 +32,15 @@ class App extends Component {
             </Container>
           </Fragment>
         )}/>
-        <Route path="/login" component={Authetication}/>
+        <Route exact path="/" render={() => (
+          <Fragment>
+            <Header/>
+            <Container>
+              <SideBar/>
+              Home
+            </Container>
+          </Fragment>
+        )}/>
       </div>
     );
   }
