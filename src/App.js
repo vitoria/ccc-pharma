@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react'
-import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
+import { Route, withRouter } from 'react-router-dom'
+import { instanceOf, PropTypes } from 'prop-types'
+import { withCookies, Cookies } from 'react-cookie'
 
 import Header from './components/Header/index'
 import SideBar from './components/SibeBar/index'
@@ -10,9 +12,21 @@ import Authetication from './components/Authetication/index'
 import './App.css';
 
 class App extends Component {
+  static propTypes = {
+    cookies: instanceOf(Cookies).isRequired,
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired
+    })
+  }
+
+  getToken = () => this.props.cookies.get('ccc-pharma-token')
+
+  componentDidMount = () => {
+    this.getToken() ? this.props.history.push('/') : this.props.history.push('/login')
+  }
+
   render() {
     return (
-      <Router>
       <div className="App">
         <Route exact path="/" render={() => (
           <Fragment>
@@ -25,9 +39,8 @@ class App extends Component {
         )}/>
         <Route path="/login" component={Authetication}/>
       </div>
-      </Router>
     );
   }
 }
 
-export default App;
+export default withRouter(withCookies(App))
