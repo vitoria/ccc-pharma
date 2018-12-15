@@ -1,19 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import { map } from 'ramda'
-
 import './global.css'
-
-const options = [
-    {
-        name: 'Home',
-        link: 'home'
-    },
-    {
-        name: 'Produtos',
-        link: 'produtos'
-    }
-]
 
 export default class SideBar extends Component {
     render() {

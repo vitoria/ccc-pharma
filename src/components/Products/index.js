@@ -8,7 +8,7 @@ export default class Product extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            isLoading: true,
+            isLoading: false,
             data: {}
         }
     }
@@ -22,16 +22,21 @@ export default class Product extends Component {
             },
         })
         .then(response => response.json())
-        .then(data => this.setState({ isLoading: false, data, error: {} }))
-        .catch(error => this.setState({ isLoading: false, data: {}, error}))
+        .then(data => this.setState({ isLoading: false, data, error: false }))
+        .catch(error => this.setState({ isLoading: false, data: false, error}))
     }
 
     componentDidMount = () => {
         this.fetchData()
     }
 
+    renderProducts = () => {
+        
+    }
+
     render() {
         const { isLoading, error } = this.state
+        console.log(error)
         return (
             <div>
             {isLoading ?
