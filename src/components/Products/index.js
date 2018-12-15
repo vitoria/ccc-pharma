@@ -30,18 +30,22 @@ export default class Product extends Component {
         this.fetchData()
     }
 
-    renderProducts = () => {
-        
-    }
+    renderProducts = () => (
+        <ul>
+            {this.data.map((product) => (
+            <li>{product.name}</li>
+            ))}   
+        </ul>
+    )
 
     render() {
         const { isLoading, error } = this.state
         console.log(error)
-        return (
+        return (    
             <div>
             {isLoading ?
                 <Spinner/> : error ?
-                    <FetchError msg={`${error}`} reload={this.fetchData}/> : 'Helloooo'
+                    <FetchError msg={`${error}`} reload={this.fetchData}/> : this.renderProducts
             }
             </div>
         )
