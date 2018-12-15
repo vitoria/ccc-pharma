@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { BASE_URL, TOKEN } from '../../utils'
+import { map } from 'ramda'
 
 import Spinner from  '../Spinner/index'
 import FetchError from '../FetchError/index'
@@ -22,7 +23,10 @@ export default class Product extends Component {
             },
         })
         .then(response => response.json())
-        .then(data => this.setState({ isLoading: false, data, error: false }))
+        .then(data => {
+            console.log("in fecth", data)
+            this.setState({ isLoading: false, data, error: false })
+        })
         .catch(error => this.setState({ isLoading: false, data: false, error}))
     }
 
@@ -31,17 +35,23 @@ export default class Product extends Component {
     }
 
     renderProducts = () => {
-        
+        const { data } = this.state
+        console.log(data)
+        return data ? map((product, index) => {
+            console.log(index)
+            return <div key={product}>{ product }</div>
+        }, data) : 'Nop'
     }
 
     render() {
         const { isLoading, error } = this.state
-        console.log(error)
+        const productsRended = this.renderProducts()
+        console.log(productsRended)
         return (
             <div>
             {isLoading ?
                 <Spinner/> : error ?
-                    <FetchError msg={`${error}`} reload={this.fetchData}/> : 'Helloooo'
+                    <FetchError msg={`${error}`} reload={this.fetchData}/> : <div>{productsRended}</div>
             }
             </div>
         )

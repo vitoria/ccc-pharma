@@ -1,0 +1,20 @@
+#modal {
+    top: 25%;
+    width: 100px;
+    height: 300px;
+    background-color: aquamarine;
+    box-shadow: 0 0 4px 2px rgba( 0, 0, 0, .25 );
+    border-radius: 3px;
+}
+
+#modalContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    padding-top: 8em;
+}

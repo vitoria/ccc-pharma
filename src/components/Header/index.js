@@ -33,7 +33,7 @@ export default class Header extends Component {
         return (
             <div>
                 <header>
-                    <div class="titleHeader">
+                    <div className="titleHeader">
                         <div id="menuBtn">
                             <i className="fas fa-bars" onClick={this.changeSideBarState}/>
                         </div>

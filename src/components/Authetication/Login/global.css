@@ -3,6 +3,8 @@
     flex-direction: column;
     justify-content: space-between;
     border-bottom: 1px solid rgba(185, 190, 195, 0.5);
+    border-top: 1px solid rgba(185, 190, 195, 0.5);
+    padding-top: 1em;
     padding-bottom: 1em;
     margin-bottom: 1em;
 }
@@ -16,7 +18,6 @@
 }
 
 input, select {
-    width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
@@ -26,7 +27,6 @@ input, select {
   }
   
 input[type=submit] {
-    width: 100%;
     background-color: #4CAF50;
     color: white;
     padding: 14px 20px;

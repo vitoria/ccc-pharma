@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom'
 import { instanceOf, PropTypes } from 'prop-types'
 import { withCookies, Cookies } from 'react-cookie'
 import { withRouter } from 'react-router-dom'
-import { TOKEN } from '../../../utils'
+import { BASE_URL } from '../../../utils'
+import { path } from 'ramda'
 
 import './global.css'
+import FetchError from '../../FetchError';
 
 class Login extends Component {
     static propTypes = {
@@ -24,9 +26,22 @@ class Login extends Component {
     }
 
     handleLogin = event => {
+        const { username, password} = this.state
         event.preventDefault()
-        this.props.cookies.set('ccc-pharma-token', TOKEN)
-        this.props.history.push('/')
+        fetch(`${BASE_URL}/login`, {
+            method: 'post',
+            body: JSON.stringify({ username, password }),
+            headers: {
+                "Content-Type": "text/plain",
+            }
+        }).then(response => {
+            console.log(response)
+            return response.json()
+        }).then(objJSON => {
+            console.log(objJSON)
+        }).catch(error => {
+            console.log(error)
+        })
     } 
 
     onChangePassword = event => {
@@ -40,7 +55,11 @@ class Login extends Component {
     render() {
         return (
             <div id="login">
+                <h3>Login</h3>
                 <form onSubmit={e => this.handleLogin(e)}>
+                    { path(['match', 'params', 'registered'], this.props) && <FetchError
+                    msg="Cadastro realizado com sucesso!"
+                    success={true}/>}
                     <label htmlFor="usernameLogin">Username</label>
                     <input
                         type="text"

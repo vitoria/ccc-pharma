@@ -19,7 +19,7 @@ export default class SideBar extends Component {
                     onClick={() => this.setState({selected: 0})}
                     className={selected === 0 ? 'nav-item-selected' : ''}
                 >
-                    <i class="fas fa-home"></i>
+                    <i className="fas fa-home"></i>
                     <span>Painel de Controle</span>
                 </Link>
                 <Link
@@ -27,7 +27,7 @@ export default class SideBar extends Component {
                     onClick={() => this.setState({selected: 1})}
                     className={selected === 1 ? 'nav-item-selected' : ''}
                 >
-                    <i class="fas fa-shopping-cart"></i>
+                    <i className="fas fa-shopping-cart"></i>
                     <span>Gerenciar Produtos</span>
                 </Link>
                 <Link
@@ -35,7 +35,7 @@ export default class SideBar extends Component {
                     onClick={() => this.setState({selected: 2})}
                     className={selected === 2 ? 'nav-item-selected' : ''}
                 >
-                    <i class="fas fa-cash-register"></i>
+                    <i className="fas fa-cash-register"></i>
                     <span>Gerenciar Vendas</span>
                 </Link>
                 <Link
@@ -43,7 +43,7 @@ export default class SideBar extends Component {
                     onClick={() => this.setState({selected: 3})}
                     className={selected === 3 ? 'nav-item-selected' : ''}
                 >
-                    <i class="fas fa-users"></i>
+                    <i className="fas fa-users"></i>
                     <span>Gerenciar Clientes</span>
                 </Link>
                 <Link
@@ -51,7 +51,7 @@ export default class SideBar extends Component {
                     onClick={() => this.setState({selected: 4})}
                     className={selected === 4 ? 'nav-item-selected' : ''}
                 >
-                    <i class="fas fa-people-carry"></i>
+                    <i className="fas fa-people-carry"></i>
                     <span>Gerenciar Funcionários</span>
                 </Link>
             </nav>

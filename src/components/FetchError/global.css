@@ -1,8 +1,15 @@
 #errorContainer {
+    border-radius: 2px;
+}
+
+.red {
     background-color: #f6dbdd;
     color: red;
-    padding: 2em;
-    border-radius: 2px;
+}
+
+.green {
+    background-color: rgb(183, 224, 183);
+    color: green;
 }
 
 #errorContainer > button {
@@ -18,4 +25,8 @@
     border: 1px solid steelblue;
     color: steelblue;
     border-radius: 2px;
+}
+
+#errorContainer .large {
+    padding: 2em;
 }

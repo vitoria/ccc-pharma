@@ -35,6 +35,7 @@ class Authetication extends Component {
             <div id="authetication">
                 <div id="authContainer">
                     <Route exact path="/login" component={Login} />
+                    <Route path="/login/:registered" component={Login} />
                     <Route exact path="/register" component={Register} />
                 </div>
             </div>
