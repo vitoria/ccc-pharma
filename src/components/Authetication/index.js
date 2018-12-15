@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import Login from './Login/index'
 import Register from './Register/index'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { instanceOf, PropTypes } from 'prop-types'
+import { withCookies, Cookies } from 'react-cookie'
+import { withRouter } from 'react-router-dom'
 
 import './global.css'
 
@@ -11,13 +14,24 @@ class Authetication extends Component {
         this.state = { isOnLogin: true }
     }
 
+    static propTypes = {
+        cookies: instanceOf(Cookies).isRequired,
+        history: PropTypes.shape({
+            push: PropTypes.func.isRequired
+        })
+    }
+
+    componentDidMount = () => {
+        this.props.cookies.get('ccc-pharma-token') && this.props.history.push('/')
+    }
+
     render() {
         return (
             <Router>
             <div id="authetication">
                 <div id="authContainer">
-                    <Route path="/login" component={Login} />
-                    <Route path="/register" component={Register} />
+                    <Route exact path="/login" component={Login} />
+                    <Route exact path="/register" component={Register} />
                 </div>
             </div>
             </Router>
@@ -25,4 +39,4 @@ class Authetication extends Component {
     }
 }
 
-export default Authetication
+export default withRouter(withCookies(Authetication))

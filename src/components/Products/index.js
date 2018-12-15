@@ -27,7 +27,7 @@ export default class Product extends Component {
     }
 
     componentDidMount = () => {
-        this.fetchData()
+        // this.fetchData()
     }
 
     render() {
