@@ -14,6 +14,7 @@ export default class Product extends Component {
     this.state = {
       isLoading: false,
       data: false,
+      category: 'MEDICINE';
     }
   }
 
@@ -79,7 +80,7 @@ export default class Product extends Component {
         "Content-Type": "application/json",
         Authorization: TOKEN,
       },
-      body: JSON.stringify({ 
+      body: JSON.stringify({
         name,
         barCode,
         manufacturer,
@@ -87,15 +88,30 @@ export default class Product extends Component {
         price: parseFloat(price)
       })
     }).then(response => {
-      response.status === 200 && this.fetchData()
+      if (response.status === 200) {
+        this.closeModal()
+        this.fetchData()
+      } else {
+        this.setState({ error: 'Não foi possível adicionar o produto', showModal: true })
+      }
     }).catch(error => {
       console.log(error)
     })
   }
 
+  closeModal = () => {
+    this.setState({
+      showModal: false,
+      name: '',
+      barCode: '',
+      manufacturer: '',
+      category: '',
+      price: '',
+    })
+  }
+
   renderProducForm = () => {
-    const { name, barCode, manufacturer, category, price } = this.state
-    console.log(this.state)
+    const { name, barCode, manufacturer, category, price, error } = this.state
     return (
       <form onSubmit={e => this.addProduct(e)}>
         <label htmlFor="nameProduct">Nome</label>
@@ -105,16 +121,19 @@ export default class Product extends Component {
         <label htmlFor="manufacturerProduct">Fabricante</label>
         <input id="manufacturerProduct" value={manufacturer} onChange={e => this.handleManufacturerChange(e)}></input>
         <label htmlFor="categoryProduct">Categoria</label>
-        <select id="categoryProduct" onChange={e => this.handleCategoryChange(e)}>
-          <option value="MEDICINE" selected={category === "MEDICINE"}>Medicamento</option>
-          <option value="COSTEMIC" selected={category === "COSMETIC"}>Cosmético</option>
-          <option value="FOOD" selected={category === "FOOD"}>Alimento</option>
-          <option value="HYGIENE" selected={category === "HYGIENE"}>Higiene</option>
+        <select id="categoryProduct" value={category} onChange={e => this.handleCategoryChange(e)}>
+          <option value="MEDICINE">Medicamento</option>
+          <option value="COSMETIC">Cosmético</option>
+          <option value="FOOD">Alimento</option>
+          <option value="HYGIENE">Higiene</option>
         </select>
         <label htmlFor="priceProduct">Preço</label>
         <input id="priceProduct" type="number" value={price} onChange={e => this.handlePriceChange(e)}></input>
+        {error && (
+          <FetchError msg={`${error}`} />
+        )}
         <input type="submit" value="Cadastrar" />
-        <input type="button" onClick={() => this.setState({ showModal: false })} value="Cancel" />
+        <input type="button" onClick={this.closeModal} value="Cancel" />
       </form>
     )
   }
@@ -133,7 +152,7 @@ export default class Product extends Component {
     return (
       <div id="productContainer">
         {isLoading ?
-          <Spinner /> : error ?
+          <Spinner /> : (error && !showModal) ?
             <FetchError msg={`${error}`} reload={this.fetchData} /> : (
               <div>
                 <h1> Produtos </h1>
@@ -173,22 +192,3 @@ export default class Product extends Component {
           )
   }
 }
-/*
-<table id="productsTable">
-{
-  <div id="productsHeader">
-    <div>Nome do Produto</div>
-    <div>Código de Barras</div>
-    <div>Fabricante</div>                    
-    <div>Categoria</div>                    
-    <div>Preço</div>
-    <div>Opções</div>
-  </div>
-}
-{ productsRended && (
-  <div id="productsContainer">
-    { productsRended }
-  </div>
-) }
-</table>
-*/
