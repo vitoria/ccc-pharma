@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { BASE_URL, TOKEN } from '../../utils'
+import { BASE_URL } from '../../utils'
 import { map } from 'ramda'
 
 import Modal from '../Modal/index'
@@ -28,10 +28,7 @@ export default class Product extends Component {
   fetchData = () => {
     this.setState({ isLoading: true })
     fetch(`${BASE_URL}/products`, {
-      method: 'get',
-      headers: {
-        Authorization: TOKEN,
-      },
+      method: 'get'
     })
       .then(response => response.json())
       .then(data => {
@@ -78,8 +75,7 @@ export default class Product extends Component {
     fetch(`${BASE_URL}/products/create`, {
       method: 'post',
       headers: {
-        "Content-Type": "application/json",
-        Authorization: TOKEN,
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         name,
@@ -130,6 +126,7 @@ export default class Product extends Component {
           <option value="HYGIENE">Higiene</option>
         </select>
         <label htmlFor="priceProduct">Preço</label>
+        <input id="priceProduct" value={price} onChange={e => this.handlePriceChange(e)}></input>
         {errorModal && (
           <FetchError msg={`${errorModal}`} />
         )}

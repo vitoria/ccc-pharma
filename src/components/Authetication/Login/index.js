@@ -20,15 +20,14 @@ class Login extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            username: 'adm',
-            password: 'adm'
+            username: '',
+            password: ''
         }
     }
 
     handleLogin = event => {
         const { username, password} = this.state
         const waza = { username, password }
-        console.log(waza)
         event.preventDefault()
         fetch(`${BASE_URL}/login`, {
             method: 'post',
@@ -37,28 +36,24 @@ class Login extends Component {
                 "Content-Type": "application/json"
             }
         }).then(response => {
-            console.log('oi', response.headers)
-            for (var pair of response.headers.entries()) {
-                console.log(pair[0]+ ': '+ pair[1]);
-             }
-            // if (response.status === 200 && response.authorization) {
-            //     this.props.cookies.set('ccc-pharma-token', response.authorization)
-            //     this.props.history.push('/')
-            // }
-            return response.json()
-        }).then(objJSON => {
-            console.log(objJSON)
+            const authorization = response.headers.get('authorization')
+            if (response.status === 200 && authorization) {
+                this.props.cookies.set('ccc-pharma-token', authorization)
+                this.props.history.push('/')
+            } else {
+                this.setState({ error: 'Credenciais inválidas' })
+            }
         }).catch(error => {
-            console.log(error)
+            this.setState({ error })
         })
     } 
 
     onChangePassword = event => {
-        this.setState({ password: event.target.value })
+        this.setState({ password: event.target.value, error: false })
     }
 
     onChangeUsername = event => {
-        this.setState({ username: event.target.value })
+        this.setState({ username: event.target.value, error: false })
     }
 
     render() {
@@ -83,6 +78,9 @@ class Login extends Component {
                         value={this.state.password}
                         onChange={this.onChangePassword}
                     />
+                    { this.state.error && (
+                        <FetchError msg={`${this.state.error}`} />
+                    ) }
                     <input type="submit" value="ENTRAR"></input>
                 </form>
                 <Link to={{ pathname: "/register" }}>Cadastrar</Link>

@@ -26,6 +26,27 @@ a {
 
 a:hover {
   color: rgb(129, 160, 185);
+  text-decoration: none;
+}
+
+a:active {
+  text-decoration: none;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+a > * {
+  color: white;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a > span {
+  text-decoration: none;
 }
 
 .loader {
