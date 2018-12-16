@@ -46,13 +46,22 @@ export default class Product extends Component {
   renderProducts = () => {
     const { data } = this.state
     return data && map(product => (
-      <div className="productItem" key={product.id}>
-        <div>{product.name}</div>
-        <div>{product.name}</div>
-        <div>{product.name}</div>
-        <div>{product.name}</div>
-        <div>{product.name}</div>
-      </div>
+      <tr class="row-content" key={product.id}>
+        <td>{product.name}</td>
+        <td>{product.barCode}</td>
+        <td>{product.manufacturer}</td>
+        <td>{product.category}</td>
+        <td>{product.price}</td>
+        <td>
+              <a class="btn btn-danger edit" href="path/to/settings" aria-label="Settings">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </a>
+              &nbsp; 
+              <a class="btn btn-info edit" href="path/to/settings" aria-label="Settings">
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+              </a> 
+           </td>
+      </tr>
     ), data)
   }
 
@@ -117,14 +126,15 @@ export default class Product extends Component {
     const productsRended = this.renderProducts()
     console.log(productsRended)
     return (
-      <div id="productsContainer">
+      <div id="productContainer">
         {isLoading ?
           <Spinner /> : error ?
             <FetchError msg={`${error}`} reload={this.fetchData} /> : (
               <div>
-                <button onClick={() => this.setState({ showModal: true })}>
-                  Adicionar produto
-                </button>
+                <h1> Produtos </h1>
+                <div class="dropdown">
+                  <a class="btn-top" href="#" class="btn btn-primary pull-right" id="add" onClick={() => this.setState({ showModal: true })}> <span class="glyphicon glyphicon-plus"></span> Adicionar Produto</a>
+                </div>
                 {showModal &&
                   <Modal
                     onCancel={() => this.setState({ showModal: false })}
@@ -133,15 +143,46 @@ export default class Product extends Component {
                     { this.renderCreateProduct() }
                   </Modal>
                 }
-                { productsRended && (
-                  <div id="productsContainer">
-                    { productsRended }
-                  </div>
-                ) }
-              </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr class="row-name">
+                          <th>Nome</th>
+                          <th>Código de Barra</th>
+                          <th>Fabricante</th>
+                          <th>Categoria</th>
+                          <th>Preço(Em R$)</th>
+                          <th>Opções</th>
+                        </tr>
+                    </thead>   
+                    <tbody>
+                        {productsRended}
+                  </tbody>
+                </table>
+
+
+                </div>
             )
-        }
-      </div>
-    )
+            }
+            </div>
+          )
   }
 }
+/*
+<table id="productsTable">
+{
+  <div id="productsHeader">
+    <div>Nome do Produto</div>
+    <div>Código de Barras</div>
+    <div>Fabricante</div>                    
+    <div>Categoria</div>                    
+    <div>Preço</div>
+    <div>Opções</div>
+  </div>
+}
+{ productsRended && (
+  <div id="productsContainer">
+    { productsRended }
+  </div>
+) }
+</table>
+*/
