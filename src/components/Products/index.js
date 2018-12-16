@@ -14,15 +14,16 @@ export default class Product extends Component {
     this.state = {
       isLoading: false,
       data: false,
-      category: 'MEDICINE';
+      category: 'MEDICINE',
     }
   }
 
-  handleBarCodeChange = e => this.setState({ barCode: e.target.value })
-  handleNameChange = e => this.setState({ name: e.target.value })
-  handleManufacturerChange = e => this.setState({ manufacturer: e.target.value })
-  handleCategoryChange = e => this.setState({ category: e.target.value })
-  handlePriceChange = e => this.setState({ price: e.target.value })
+
+  handleBarCodeChange = e => this.setState({ barCode: e.target.value, errorModal: false })
+  handleNameChange = e => this.setState({ name: e.target.value, errorModal: false })
+  handleManufacturerChange = e => this.setState({ manufacturer: e.target.value, errorModal: false })
+  handleCategoryChange = e => this.setState({ category: e.target.value, errorModal: false })
+  handlePriceChange = e => this.setState({ price: e.target.value, errorModal: false })
 
   fetchData = () => {
     this.setState({ isLoading: true })
@@ -34,9 +35,9 @@ export default class Product extends Component {
     })
       .then(response => response.json())
       .then(data => {
-        this.setState({ isLoading: false, data: data, error: false })
+        this.setState({ isLoading: false, data: data, error: false, showModal: false })
       })
-      .catch(error => this.setState({ isLoading: false, data: false, error }))
+      .catch(error => this.setState({ isLoading: false, data: false, error, showModal: false }))
   }
 
   componentDidMount = () => {
@@ -92,7 +93,7 @@ export default class Product extends Component {
         this.closeModal()
         this.fetchData()
       } else {
-        this.setState({ error: 'Não foi possível adicionar o produto', showModal: true })
+        this.setState({ errorModal: 'Não foi possível adicionar o produto', showModal: true })
       }
     }).catch(error => {
       console.log(error)
@@ -107,11 +108,12 @@ export default class Product extends Component {
       manufacturer: '',
       category: '',
       price: '',
+      errorModal: false,
     })
   }
 
   renderProducForm = () => {
-    const { name, barCode, manufacturer, category, price, error } = this.state
+    const { name, barCode, manufacturer, category, price, errorModal } = this.state
     return (
       <form onSubmit={e => this.addProduct(e)}>
         <label htmlFor="nameProduct">Nome</label>
@@ -128,9 +130,8 @@ export default class Product extends Component {
           <option value="HYGIENE">Higiene</option>
         </select>
         <label htmlFor="priceProduct">Preço</label>
-        <input id="priceProduct" type="number" value={price} onChange={e => this.handlePriceChange(e)}></input>
-        {error && (
-          <FetchError msg={`${error}`} />
+        {errorModal && (
+          <FetchError msg={`${errorModal}`} />
         )}
         <input type="submit" value="Cadastrar" />
         <input type="button" onClick={this.closeModal} value="Cancel" />
@@ -139,11 +140,11 @@ export default class Product extends Component {
   }
 
   renderCreateProduct = () => (
-      <Fragment>
-        <h3>Cadastro de Produto</h3>
-        {this.renderProducForm()}
-      </Fragment>
-    )
+    <Fragment>
+      <h3>Cadastro de Produto</h3>
+      {this.renderProducForm()}
+    </Fragment>
+  )
 
   render() {
     const { isLoading, error, showModal } = this.state
@@ -152,7 +153,7 @@ export default class Product extends Component {
     return (
       <div id="productContainer">
         {isLoading ?
-          <Spinner /> : (error && !showModal) ?
+          <Spinner /> : (error) ?
             <FetchError msg={`${error}`} reload={this.fetchData} /> : (
               <div>
                 <h1> Produtos </h1>
@@ -162,10 +163,9 @@ export default class Product extends Component {
                 </div>
                 {showModal &&
                   <Modal
-                    onCancel={() => this.setState({ showModal: false })}
-                    onSubmit={this.addProduct}
+                    onClose={() => this.setState({ showModal: false })}
                   >
-                    { this.renderCreateProduct() }
+                    {this.renderCreateProduct()}
                   </Modal>
                 }
                 <table class="table table-striped">
@@ -183,8 +183,6 @@ export default class Product extends Component {
                         {productsRended}
                   </tbody>
                 </table>
-
-
                 </div>
             )
             }
