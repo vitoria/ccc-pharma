@@ -46,14 +46,29 @@ export default class Product extends Component {
 
   renderProducts = () => {
     const { data } = this.state
+    const categories = {
+      MEDICINE: 'Medicamento',
+      COMSMETIC: 'Cosmético',
+      FOOD: 'Alimento',
+      HYGIENE: 'Higiene'
+  }
     return data && map(product => (
-      <div className="productItem" key={product.id}>
-        <div>{product.name}</div>
-        <div>{product.name}</div>
-        <div>{product.name}</div>
-        <div>{product.name}</div>
-        <div>{product.name}</div>
-      </div>
+      <tr class="row-content" key={product.id}>
+        <td>{product.name}</td>
+        <td>{product.barCode}</td>
+        <td>{product.manufacturer}</td>
+        <td>{categories[product.category]}</td>
+        <td>{product.price}</td>
+        <td>
+              <a class="btn btn-danger edit" href="path/to/settings" aria-label="Settings">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </a>
+              &nbsp; 
+              <a class="btn btn-info edit" href="path/to/settings" aria-label="Settings">
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+              </a> 
+           </td>
+      </tr>
     ), data)
   }
 
@@ -115,7 +130,6 @@ export default class Product extends Component {
           <option value="HYGIENE">Higiene</option>
         </select>
         <label htmlFor="priceProduct">Preço</label>
-        <input id="priceProduct" type="number" value={price} onChange={e => this.handlePriceChange(e)}></input>
         {errorModal && (
           <FetchError msg={`${errorModal}`} />
         )}
@@ -137,14 +151,16 @@ export default class Product extends Component {
     const productsRended = this.renderProducts()
     console.log(productsRended)
     return (
-      <div id="productsContainer">
+      <div id="productContainer">
         {isLoading ?
           <Spinner /> : (error) ?
             <FetchError msg={`${error}`} reload={this.fetchData} /> : (
               <div>
-                <button onClick={() => this.setState({ showModal: true })}>
-                  Adicionar produto
-                </button>
+                <h1> Produtos </h1>
+                <hr></hr>
+                <div class="dropdown">
+                  <a class="btn-top" href="#" class="btn btn-primary pull-right" id="add" onClick={() => this.setState({ showModal: true })}> <span class="glyphicon glyphicon-plus"></span> Adicionar Produto</a>
+                </div>
                 {showModal &&
                   <Modal
                     onClose={() => this.setState({ showModal: false })}
@@ -152,15 +168,25 @@ export default class Product extends Component {
                     {this.renderCreateProduct()}
                   </Modal>
                 }
-                {productsRended && (
-                  <div id="productsContainer">
-                    {productsRended}
-                  </div>
-                )}
-              </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr class="row-name">
+                          <th>Nome</th>
+                          <th>Código de Barra</th>
+                          <th>Fabricante</th>
+                          <th>Categoria</th>
+                          <th>Preço(Em R$)</th>
+                          <th>Opções</th>
+                        </tr>
+                    </thead>   
+                    <tbody>
+                        {productsRended}
+                  </tbody>
+                </table>
+                </div>
             )
-        }
-      </div>
-    )
+            }
+            </div>
+          )
   }
 }
