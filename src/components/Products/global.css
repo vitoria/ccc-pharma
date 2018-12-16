@@ -8,3 +8,7 @@
     padding-top: 1em;
     margin-bottom: 1em;
 }
+
+.productItem {
+    display: flex;
+}

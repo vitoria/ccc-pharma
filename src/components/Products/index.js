@@ -17,6 +17,13 @@ export default class Product extends Component {
     }
   }
 
+
+  handleBarCodeChange = e => this.setState({ barCode: e.target.value })
+  handleNameChange = e => this.setState({ name: e.target.value })
+  handleManufacturerChange = e => this.setState({ manufacturer: e.target.value })
+  handleCategoryChange = e => this.setState({ category: e.target.value })
+  handlePriceChange = e => this.setState({ price: e.target.value })
+
   fetchData = () => {
     this.setState({ isLoading: true })
     fetch(`${BASE_URL}/products`, {
@@ -39,22 +46,19 @@ export default class Product extends Component {
 
   renderProducts = () => {
     const { data } = this.state
-    console.log(data)
-    return data ? map((product, index) => {
-      console.log(index)
-      return <div key={product.id}>{product}</div>
-    }, data) : 'Nop'
+    return data && map(product => (
+      <div className="productItem" key={product.id}>
+        <div>{product.name}</div>
+        <div>{product.name}</div>
+        <div>{product.name}</div>
+        <div>{product.name}</div>
+        <div>{product.name}</div>
+      </div>
+    ), data)
   }
 
-  handleBarCodeChange = e => this.setState({ bar_code: e.target.value })
-  handleNameChange = e => this.setState({ name: e.target.value })
-  handleManufacturerChange = e => this.setState({ manufacturer: e.target.value })
-  handleCategoryChange = e => this.setState({ category: e.target.value })
-  handlePriceChange = e => this.setState({ price: e.target.value })
-
   addProduct = event => {
-    const { name, bar_code, manufacturer, category, price } = this.state
-    console.log(this.state)
+    const { name, barCode, manufacturer, category, price } = this.state
     event.preventDefault()
     fetch(`${BASE_URL}/products/create`, {
       method: 'post',
@@ -64,7 +68,7 @@ export default class Product extends Component {
       },
       body: JSON.stringify({ 
         name,
-        "barCode": bar_code,
+        barCode,
         manufacturer,
         category,
         price: parseFloat(price)
@@ -77,14 +81,14 @@ export default class Product extends Component {
   }
 
   renderProducForm = () => {
-    const { name, bar_code, manufacturer, category, price } = this.state
+    const { name, barCode, manufacturer, category, price } = this.state
     console.log(this.state)
     return (
       <form onSubmit={e => this.addProduct(e)}>
         <label htmlFor="nameProduct">Nome</label>
         <input id="nameProduct" value={name} onChange={e => this.handleNameChange(e)}></input>
         <label htmlFor="barCodeProduct">Código de Barras</label>
-        <input id="barCodeProduct" value={bar_code} onChange={e => this.handleBarCodeChange(e)}></input>
+        <input id="barCodeProduct" value={barCode} onChange={e => this.handleBarCodeChange(e)}></input>
         <label htmlFor="manufacturerProduct">Fabricante</label>
         <input id="manufacturerProduct" value={manufacturer} onChange={e => this.handleManufacturerChange(e)}></input>
         <label htmlFor="categoryProduct">Categoria</label>
@@ -132,7 +136,11 @@ export default class Product extends Component {
                     {/* {map(item => item, productsRended)} */}
                   </Modal>
                 }
-                { productsRended }
+                { productsRended && (
+                  <div id="productsContainer">
+                    { productsRended }
+                  </div>
+                ) }
               </div>
             )
         }

@@ -32,7 +32,7 @@ class Login extends Component {
             method: 'post',
             body: JSON.stringify({ username, password }),
             headers: {
-                "Content-Type": "text/plain",
+                "Content-Type": "application/json",
                 Authorization: TOKEN,
             }
         }).then(response => {
