@@ -34,7 +34,6 @@ export default class Product extends Component {
     })
       .then(response => response.json())
       .then(data => {
-        console.log("in fecth", data)
         this.setState({ isLoading: false, data: data, error: false })
       })
       .catch(error => this.setState({ isLoading: false, data: false, error }))
@@ -74,7 +73,7 @@ export default class Product extends Component {
         price: parseFloat(price)
       })
     }).then(response => {
-      console.log(response)
+      response.status === 200 && this.fetchData()
     }).catch(error => {
       console.log(error)
     })
@@ -106,14 +105,12 @@ export default class Product extends Component {
     )
   }
 
-  renderCreateProduct = () => {
-    return (
+  renderCreateProduct = () => (
       <Fragment>
         <h3>Cadastro de Produto</h3>
         {this.renderProducForm()}
       </Fragment>
     )
-  }
 
   render() {
     const { isLoading, error, showModal } = this.state
@@ -133,7 +130,7 @@ export default class Product extends Component {
                     onCancel={() => this.setState({ showModal: false })}
                     onSubmit={this.addProduct}
                   >
-                    {/* {map(item => item, productsRended)} */}
+                    { this.renderCreateProduct() }
                   </Modal>
                 }
                 { productsRended && (

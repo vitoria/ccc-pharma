@@ -8,7 +8,7 @@ header {
     grid-gap: 1.5em;
     background-color: steelblue;
     color: white;
-    padding: 1.5em 2em;
+    padding: 1em 2em;
     font-weight: bold;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -18,7 +18,7 @@ header {
     box-shadow: 2px 2px 4px 2px rgba( 0, 0, 0, .2 );
 }
 
-header > #authBtn {
+#authBtn {
     grid-column: 2 / 2;
     justify-self: end;
 }
@@ -34,10 +34,24 @@ header > * {
 }
 
 #menuBtn {
-    margin-right: 1em;
+    padding: 1em;
     cursor: pointer;
+}
+
+#menuBtn:hover {
+    background-color: rgb(76, 99, 117);
 }
 
 .titleHeader {
     display: flex;
+    color: white;
+}
+
+.titleHeader > a {
+    padding: 1em;
+    color: white;
+}
+
+.titleHeader > a:hover {
+    background-color: rgb(76, 99, 117);
 }

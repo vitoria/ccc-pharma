@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { instanceOf, PropTypes } from 'prop-types'
 import { withCookies, Cookies } from 'react-cookie'
 import { withRouter } from 'react-router-dom'
-import { BASE_URL, TOKEN } from '../../../utils'
+import { BASE_URL } from '../../../utils'
 import { path } from 'ramda'
 
 import './global.css'
@@ -20,26 +20,32 @@ class Login extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            username: '',
-            password: ''
+            username: 'adm',
+            password: 'adm'
         }
     }
 
     handleLogin = event => {
         const { username, password} = this.state
+        const waza = { username, password }
+        console.log(waza)
         event.preventDefault()
         fetch(`${BASE_URL}/login`, {
             method: 'post',
-            body: JSON.stringify({ username, password }),
+            body: JSON.stringify(waza),
             headers: {
-                "Content-Type": "application/json",
-                Authorization: TOKEN,
+                "Content-Type": "application/json"
             }
         }).then(response => {
-            const objJSON = response.json()
-            console.log(response)
-            response.status !== 200 && objJSON.then(Promise.reject.bind(Promise))
-            return objJSON
+            console.log('oi', response.headers)
+            for (var pair of response.headers.entries()) {
+                console.log(pair[0]+ ': '+ pair[1]);
+             }
+            // if (response.status === 200 && response.authorization) {
+            //     this.props.cookies.set('ccc-pharma-token', response.authorization)
+            //     this.props.history.push('/')
+            // }
+            return response.json()
         }).then(objJSON => {
             console.log(objJSON)
         }).catch(error => {

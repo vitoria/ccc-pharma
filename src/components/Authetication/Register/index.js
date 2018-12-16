@@ -23,7 +23,7 @@ class Register extends Component {
         const { email, name, password } = this.state
         fetch(`${BASE_URL}/user/create`, {
             method: 'post',
-            body: JSON.stringify({email, name, password}),
+            body: JSON.stringify({email, name, password, role: 'CLIENT'}),
             headers: {
                 "Content-Type": "application/json",
             }
