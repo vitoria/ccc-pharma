@@ -31,6 +31,7 @@ class Authetication extends Component {
 
     render() {
         return (
+            <Router>
             <div id="authetication">
                 <div id="authContainer">
                     <Route exact path="/login" component={Login} />
@@ -38,6 +39,7 @@ class Authetication extends Component {
                     <Route exact path="/register" component={Register} />
                 </div>
             </div>
+            </Router>
         )
     }
 }

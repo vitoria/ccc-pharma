@@ -28,7 +28,7 @@ export default class Product extends Component {
       .then(response => response.json())
       .then(data => {
         console.log("in fecth", data)
-        this.setState({ isLoading: false, data, error: false })
+        this.setState({ isLoading: false, data: data, error: false })
       })
       .catch(error => this.setState({ isLoading: false, data: false, error }))
   }
@@ -42,7 +42,7 @@ export default class Product extends Component {
     console.log(data)
     return data ? map((product, index) => {
       console.log(index)
-      return <div key={product}>{product}</div>
+      return <div key={product.id}>{product}</div>
     }, data) : 'Nop'
   }
 
@@ -54,18 +54,20 @@ export default class Product extends Component {
 
   addProduct = event => {
     const { name, bar_code, manufacturer, category, price } = this.state
+    console.log(this.state)
     event.preventDefault()
-    fetch(`${BASE_URL}/product/create`, {
+    fetch(`${BASE_URL}/products/create`, {
       method: 'post',
       headers: {
         "Content-Type": "application/json",
+        Authorization: TOKEN,
       },
       body: JSON.stringify({ 
         name,
-        bar_code,
+        "barCode": bar_code,
         manufacturer,
         category,
-        price
+        price: parseFloat(price)
       })
     }).then(response => {
       console.log(response)
@@ -111,7 +113,7 @@ export default class Product extends Component {
 
   render() {
     const { isLoading, error, showModal } = this.state
-    const productsRended = 'Wazaaaaaa'
+    const productsRended = this.renderProducts()
     console.log(productsRended)
     return (
       <div id="productsContainer">
@@ -127,9 +129,10 @@ export default class Product extends Component {
                     onCancel={() => this.setState({ showModal: false })}
                     onSubmit={this.addProduct}
                   >
-                    {this.renderCreateProduct()}
+                    {/* {map(item => item, productsRended)} */}
                   </Modal>
                 }
+                { productsRended }
               </div>
             )
         }

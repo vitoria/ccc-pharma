@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { instanceOf, PropTypes } from 'prop-types'
 import { withCookies, Cookies } from 'react-cookie'
 import { withRouter } from 'react-router-dom'
-import { BASE_URL } from '../../../utils'
+import { BASE_URL, TOKEN } from '../../../utils'
 import { path } from 'ramda'
 
 import './global.css'
@@ -33,10 +33,13 @@ class Login extends Component {
             body: JSON.stringify({ username, password }),
             headers: {
                 "Content-Type": "text/plain",
+                Authorization: TOKEN,
             }
         }).then(response => {
+            const objJSON = response.json()
             console.log(response)
-            return response.json()
+            response.status !== 200 && objJSON.then(Promise.reject.bind(Promise))
+            return objJSON
         }).then(objJSON => {
             console.log(objJSON)
         }).catch(error => {
