@@ -55,8 +55,18 @@ a.btn-danger
     background:#d9534f;  
 }
 
-#add{
-    margin-top: -30px;
+.addButton{
+    display:block;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background: steelblue;
+    color: white;
+    text-align: center;
+    font-size: 23px;
+    position: relative;
+    top: 1%;
+    left: 89.5%;
 }
 
 a.btn-top

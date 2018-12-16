@@ -17,7 +17,6 @@ export default class Product extends Component {
     }
   }
 
-
   handleBarCodeChange = e => this.setState({ barCode: e.target.value })
   handleNameChange = e => this.setState({ name: e.target.value })
   handleManufacturerChange = e => this.setState({ manufacturer: e.target.value })
@@ -45,12 +44,18 @@ export default class Product extends Component {
 
   renderProducts = () => {
     const { data } = this.state
+    const categories = {
+      MEDICINE: 'Medicamento',
+      COMSMETIC: 'Cosmético',
+      FOOD: 'Alimento',
+      HYGIENE: 'Higiene'
+  }
     return data && map(product => (
       <tr class="row-content" key={product.id}>
         <td>{product.name}</td>
         <td>{product.barCode}</td>
         <td>{product.manufacturer}</td>
-        <td>{product.category}</td>
+        <td>{categories[product.category]}</td>
         <td>{product.price}</td>
         <td>
               <a class="btn btn-danger edit" href="path/to/settings" aria-label="Settings">
@@ -132,6 +137,7 @@ export default class Product extends Component {
             <FetchError msg={`${error}`} reload={this.fetchData} /> : (
               <div>
                 <h1> Produtos </h1>
+                <hr></hr>
                 <div class="dropdown">
                   <a class="btn-top" href="#" class="btn btn-primary pull-right" id="add" onClick={() => this.setState({ showModal: true })}> <span class="glyphicon glyphicon-plus"></span> Adicionar Produto</a>
                 </div>
