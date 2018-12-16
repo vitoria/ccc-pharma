@@ -15,6 +15,7 @@ export default class Product extends Component {
       isLoading: false,
       data: false,
       category: 'MEDICINE',
+      filter: 'TODOS',
     }
   }
 
@@ -24,10 +25,16 @@ export default class Product extends Component {
   handleManufacturerChange = e => this.setState({ manufacturer: e.target.value, errorModal: false })
   handleCategoryChange = e => this.setState({ category: e.target.value, errorModal: false })
   handlePriceChange = e => this.setState({ price: e.target.value, errorModal: false })
+  handleFilterChange = e => {
+    this.setState({ filter: e.target.value })
+    this.fetchData(e.target.value)
+  }
 
-  fetchData = () => {
+  fetchData = (category = 'TODOS') => {
     this.setState({ isLoading: true })
-    fetch(`${BASE_URL}/products`, {
+    const url = `${BASE_URL}/products${category !== 'TODOS' ? `/category/${category}` : '/'}`
+    console.log(url)
+    fetch(url, {
       method: 'get'
     })
       .then(response => response.json())
@@ -48,23 +55,23 @@ export default class Product extends Component {
       COMSMETIC: 'Cosmético',
       FOOD: 'Alimento',
       HYGIENE: 'Higiene'
-  }
+    }
     return data && map(product => (
-      <tr class="row-content" key={product.id}>
+      <tr className="row-content" key={product.id}>
         <td>{product.name}</td>
         <td>{product.barCode}</td>
         <td>{product.manufacturer}</td>
         <td>{categories[product.category]}</td>
         <td>{product.price}</td>
         <td>
-              <a class="btn btn-danger edit" href="path/to/settings" aria-label="Settings">
-                <i class="fa fa-trash" aria-hidden="true"></i>
-              </a>
-              &nbsp; 
-              <a class="btn btn-info edit" href="path/to/settings" aria-label="Settings">
-                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-              </a> 
-           </td>
+          <a className="btn btn-danger edit" href="path/to/settings" aria-label="Settings">
+            <i className="fa fa-trash" aria-hidden="true"></i>
+          </a>
+          &nbsp;
+              <a className="btn btn-info edit" href="path/to/settings" aria-label="Settings">
+            <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+          </a>
+        </td>
       </tr>
     ), data)
   }
@@ -144,9 +151,8 @@ export default class Product extends Component {
   )
 
   render() {
-    const { isLoading, error, showModal } = this.state
+    const { isLoading, error, showModal, filter } = this.state
     const productsRended = this.renderProducts()
-    console.log(productsRended)
     return (
       <div id="productContainer">
         {isLoading ?
@@ -155,8 +161,20 @@ export default class Product extends Component {
               <div>
                 <h1> Produtos </h1>
                 <hr></hr>
-                <div class="dropdown">
-                  <a class="btn-top" href="#" class="btn btn-primary pull-right" id="add" onClick={() => this.setState({ showModal: true })}> <span class="glyphicon glyphicon-plus"></span> Adicionar Produto</a>
+                <div className="flex flex-row-reverse w-100">
+                  <div className="ml1">
+                    <select value={filter} onChange={e => this.handleFilterChange(e)}>
+                      <option value="TODOS">Todos</option>
+                      <option value="MEDICINE">Medicamento</option>
+                      <option value="COSMETIC">Cosmético</option>
+                      <option value="FOOD">Alimento</option>
+                      <option value="HYGIENE">Higiene</option>
+                    </select>
+                  </div>
+                  <div className="btn-primary customBtn" id="add" onClick={() => this.setState({ showModal: true })}>
+                    <span className="glyphicon glyphicon-plus" />
+                    <span>Adicionar Produto</span>
+                  </div>
                 </div>
                 {showModal &&
                   <Modal
@@ -165,25 +183,25 @@ export default class Product extends Component {
                     {this.renderCreateProduct()}
                   </Modal>
                 }
-                <table class="table table-striped">
-                    <thead>
-                        <tr class="row-name">
-                          <th>Nome</th>
-                          <th>Código de Barra</th>
-                          <th>Fabricante</th>
-                          <th>Categoria</th>
-                          <th>Preço(Em R$)</th>
-                          <th>Opções</th>
-                        </tr>
-                    </thead>   
-                    <tbody>
-                        {productsRended}
+                <table className="table table-striped">
+                  <thead>
+                    <tr className="row-name">
+                      <th>Nome</th>
+                      <th>Código de Barra</th>
+                      <th>Fabricante</th>
+                      <th>Categoria</th>
+                      <th>Preço(Em R$)</th>
+                      <th>Opções</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {productsRended}
                   </tbody>
                 </table>
-                </div>
+              </div>
             )
-            }
-            </div>
-          )
+        }
+      </div>
+    )
   }
 }
