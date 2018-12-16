@@ -19,11 +19,11 @@ export default class Product extends Component {
   }
 
 
-  handleBarCodeChange = e => this.setState({ barCode: e.target.value, error: false })
-  handleNameChange = e => this.setState({ name: e.target.value, error: false })
-  handleManufacturerChange = e => this.setState({ manufacturer: e.target.value, error: false })
-  handleCategoryChange = e => this.setState({ category: e.target.value, error: false })
-  handlePriceChange = e => this.setState({ price: e.target.value, error: false })
+  handleBarCodeChange = e => this.setState({ barCode: e.target.value, errorModal: false })
+  handleNameChange = e => this.setState({ name: e.target.value, errorModal: false })
+  handleManufacturerChange = e => this.setState({ manufacturer: e.target.value, errorModal: false })
+  handleCategoryChange = e => this.setState({ category: e.target.value, errorModal: false })
+  handlePriceChange = e => this.setState({ price: e.target.value, errorModal: false })
 
   fetchData = () => {
     this.setState({ isLoading: true })
@@ -78,7 +78,7 @@ export default class Product extends Component {
         this.closeModal()
         this.fetchData()
       } else {
-        this.setState({ error: 'Não foi possível adicionar o produto', showModal: true })
+        this.setState({ errorModal: 'Não foi possível adicionar o produto', showModal: true })
       }
     }).catch(error => {
       console.log(error)
@@ -93,11 +93,12 @@ export default class Product extends Component {
       manufacturer: '',
       category: '',
       price: '',
+      errorModal: false,
     })
   }
 
   renderProducForm = () => {
-    const { name, barCode, manufacturer, category, price, error } = this.state
+    const { name, barCode, manufacturer, category, price, errorModal } = this.state
     return (
       <form onSubmit={e => this.addProduct(e)}>
         <label htmlFor="nameProduct">Nome</label>
@@ -115,8 +116,8 @@ export default class Product extends Component {
         </select>
         <label htmlFor="priceProduct">Preço</label>
         <input id="priceProduct" type="number" value={price} onChange={e => this.handlePriceChange(e)}></input>
-        {error && (
-          <FetchError msg={`${error}`} />
+        {errorModal && (
+          <FetchError msg={`${errorModal}`} />
         )}
         <input type="submit" value="Cadastrar" />
         <input type="button" onClick={this.closeModal} value="Cancel" />
@@ -138,7 +139,7 @@ export default class Product extends Component {
     return (
       <div id="productsContainer">
         {isLoading ?
-          <Spinner /> : (error && !showModal) ?
+          <Spinner /> : (error) ?
             <FetchError msg={`${error}`} reload={this.fetchData} /> : (
               <div>
                 <button onClick={() => this.setState({ showModal: true })}>
@@ -146,8 +147,7 @@ export default class Product extends Component {
                 </button>
                 {showModal &&
                   <Modal
-                    onCancel={() => this.setState({ showModal: false })}
-                    onSubmit={this.addProduct}
+                    onClose={() => this.setState({ showModal: false })}
                   >
                     {this.renderCreateProduct()}
                   </Modal>
