@@ -24,6 +24,9 @@ class ProductForm extends Component {
     const { name, barCode, manufacturer, category, price } = this.state
     const { product } = this.props
     event.preventDefault()
+    if ( name === '' || barCode === '' || manufacturer === '' || price === '') {
+      this.setState({ errorModal: 'Preencha todas informações' })
+    } else
     this.props.onSuccess({ id: product && product.id, name, barCode, manufacturer, category, price })
   }
 
@@ -56,7 +59,7 @@ class ProductForm extends Component {
           <FetchError msg={`${errorModal}`} />
         )}
         <input type="submit" value={product ? "EDITAR" : "Cadastrar"} />
-        <input type="button" onClick={e => this.onCancel(e)} value="Cancel" />
+        <input type="button" onClick={e => this.onCancel(e)} value="Cancelar" />
       </form>
     )
   }

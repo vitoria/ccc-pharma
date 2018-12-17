@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { BASE_URL } from '../../utils'
+import { BASE_URL, getProduct } from '../../utils'
 
 import ProductInfo from './ProductInfo'
 import ProductUpdate from './ProductUpdate'
@@ -42,23 +42,33 @@ class ProductItem extends Component {
     this.setState({ showUpdate: true })
   }
 
+  fetchProduct = () => {
+    getProduct(this.props.product.id).then(response => {
+      if (response.status === 200) {
+        response.json().then(product => {
+          this.setState({product2: product})
+        })
+      }
+    })
+  }
+
   render() {
     const {
       isAdmin,
       product,
-      product: {
-        id,
-        barCode,
-        name,
-        manufacturer,
-        category,
-        status,
-        sellingPrice,
-        listingPrice,
-        stock,
-      }
     } = this.props
-    const { showInfo, showUpdate } = this.state
+    const { showInfo, showUpdate, product2 } = this.state
+    const {
+      id,
+      barCode,
+      name,
+      manufacturer,
+      category,
+      status,
+      sellingPrice,
+      listingPrice,
+      stock,
+    } = product2 ? product2 : product
     return !this.state.deleted ? (
       <Fragment>
         <tr className="row-content" key={id}>
@@ -98,8 +108,15 @@ class ProductItem extends Component {
             </td>
           )}
         </tr>
-        {showInfo && <ProductInfo product={product} onClose={() => this.setState({ showInfo: false })} />}
-        {showUpdate && <ProductUpdate product={product} onClose={() => this.setState({ showUpdate: false })} />}
+        {showInfo && <ProductInfo product={product2 ? product2 : product} onClose={() => this.setState({ showInfo: false })} />}
+        {showUpdate && <ProductUpdate
+        product={product2 ? product2 : product}
+        onSuccuss={() => {
+          this.fetchProduct()
+          this.setState({ showUpdate: false })
+        }}
+        onClose={() => this.setState({ showUpdate: false })}
+        />}
       </Fragment>
     ) : null
   }

@@ -29,6 +29,7 @@ class Employees extends Component {
         <EmployeeList refetch={refetch} />
         {showModal && (
           <Modal onClose={() => this.setState({ showModal: false })}>
+          <h3>Cadastrar Funcionário</h3>
             <EmployeeForm onSuccess={() => this.setState({ showModal: false, refetch: true })} />
           </Modal>
         )}

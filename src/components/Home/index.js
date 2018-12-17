@@ -52,7 +52,7 @@ class Home extends Component {
             <span>Produtos</span>
           </div>
           <div className="homeItem">
-            <h1>25.778</h1>
+            <h1>-</h1>
             <span>Vendas</span>
           </div>
           <div className="homeItem">

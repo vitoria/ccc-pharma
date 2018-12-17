@@ -95,6 +95,12 @@ export const getLowStockProducts = token => fetch(
   }
 )
 
+export const getAlmostExpiredBatches = token => fetch(
+  `${BASE_URL}/batches/toExpire`, {
+    method: 'get'
+  }
+)
+
 export const getDiscounts = token => fetch(
   `${BASE_URL}/discounts`, {
     method: 'get',
@@ -140,3 +146,12 @@ export const createUser = user => fetch(
       "Content-Type": "application/json",
     }
   })
+
+export const getProduct = id => fetch(
+  `${BASE_URL}/products/${id}`, {
+    method: 'get',
+    headers: {
+      "Content-Type": "application/json",
+    }
+  }
+)

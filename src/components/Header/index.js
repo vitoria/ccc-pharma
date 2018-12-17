@@ -19,17 +19,10 @@ class Header extends Component {
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
   }
 
-  componentWillUpdate = () => {
-    getCurrentUser(getToken(this.props.cookies)).then(response => {
-      if (response.status === 200) {
-        response.json().then(user => this.setState({ user: user }))
-      }
-    })
-  }
-
   componentDidMount() {
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
+    this.setState({ isAdmin: this.props.cookies.get('waza') === 'true'})
   }
 
   componentWillUnmount() {
@@ -45,7 +38,7 @@ class Header extends Component {
   }
 
   render() {
-    const { width, openSideBar, user } = this.state
+    const { width, openSideBar, isAdmin } = this.state
     return (
       <div>
         <header>
@@ -57,7 +50,7 @@ class Header extends Component {
           </div>
           <AuthenticationBtn />
         </header>
-        <SideBar isOpen={width > 1000 || openSideBar} isAdmin={user.role === 'ADMIN'} />
+        <SideBar isOpen={width > 1000 || openSideBar} isAdmin={isAdmin} />
       </div>
     )
   }

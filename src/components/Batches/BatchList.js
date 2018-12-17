@@ -52,6 +52,7 @@ class BatchList extends Component {
     addProductBatch(this.props.productId, { quantity: parseInt(quantity), expirationDate })
       .then(response => {
         if (response.status === 200) {
+          this.props.onSuccess()
           this.fetchBatches()
         }
       })
@@ -61,7 +62,7 @@ class BatchList extends Component {
   renderBatches = () => {
     const { batches } = this.state
     return map(batch => (
-      <BatchItem key={batch.id} batch={batch} />
+      <BatchItem key={batch.id} batch={batch} onSuccess={this.props.onSuccess} />
     ), batches)
   }
 

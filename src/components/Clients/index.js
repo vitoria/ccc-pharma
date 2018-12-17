@@ -29,6 +29,7 @@ class Clients extends Component {
         <ClientList refetch={refetch} />
         {showModal && (
           <Modal onClose={() => this.setState({ showModal: false })}>
+          <h3>Cadastrar Cliente</h3>
             <ClientForm onSuccess={() => this.setState({ showModal: false, refetch: true })} />
           </Modal>
         )}

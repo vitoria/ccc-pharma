@@ -21,18 +21,22 @@ class EmployeeForm extends Component {
   onSuccess = event => {
     const { name, email, password, passwordConfirmation } = this.state
     event.preventDefault()
-    if (password === passwordConfirmation) {
-      createUser({ name, email, password, role: 'ADMIN' }).then(response => {
-        if (response.status === 200) {
-          this.props.onSuccess()
-        } else {
-          this.setState({ error: 'Não foi possível realizar o cadastro' })
-        }
-      }).catch(err => {
-        this.setState({ error: err })
-      })
+    if (name === '' || email === '' || password === '' || passwordConfirmation === '') {
+      this.setState({ error: 'Preencha todas as informações' })
     } else {
-      this.setState({ error: 'As senhas não conferem' })
+      if (password === passwordConfirmation) {
+        createUser({ name, email, password, role: 'ADMIN' }).then(response => {
+          if (response.status === 200) {
+            this.props.onSuccess()
+          } else {
+            this.setState({ error: 'Não foi possível realizar o cadastro' })
+          }
+        }).catch(err => {
+          this.setState({ error: err })
+        })
+      } else {
+        this.setState({ error: 'As senhas não conferem' })
+      }
     }
   }
 
@@ -57,7 +61,7 @@ class EmployeeForm extends Component {
           <FetchError msg={`${error}`} />
         )}
         <input type="submit" value="Cadastrar" />
-        <input type="button" onClick={e => this.onCancel(e)} value="Cancel" />
+        <input type="button" onClick={e => this.onCancel(e)} value="Cancelar" />
       </form>
     )
   }

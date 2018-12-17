@@ -22,7 +22,7 @@ class AuthenticationBtn extends Component {
     })
   }
 
-  componentWillUpdate = () => this.fetchCurrentUser()
+  componentWillMount = () => this.fetchCurrentUser()
 
   fetchCurrentUser = () => {
     getCurrentUser(this.isLogged())
@@ -40,6 +40,7 @@ class AuthenticationBtn extends Component {
   logout = () => {
     const { cookies } = this.props
     cookies.set('ccc-pharma-token', '')
+    cookies.set('waza', 'false')
     window.location.reload()
   }
 

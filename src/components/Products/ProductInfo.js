@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Modal from '../Modal/index'
 import BatchList from '../Batches/BatchList'
+import { getProduct } from '../../utils'
 
 const categories = {
   MEDICINE: 'Medicamento',
@@ -12,19 +13,36 @@ const categories = {
 const getStatus = status => status === 'UNAVAILABLE' ? 'Indisponível' : 'Disponível'
 
 class ProductInfo extends Component {
-  renderProductDetails = () => {
-    const {
-      product: {
-        name,
-        barCode,
-        manufacturer,
-        category,
-        price,
-        stock,
-        expiredStock,
-        status,
+  constructor(props) {
+    super(props)
+    this.state = {
+      product2: false
+    }
+  }
+
+  fetchProduct = () => {
+    getProduct(this.props.product.id).then(response => {
+      if (response.status === 200) {
+        response.json().then(product2 => {
+          this.setState({ product2: product2 })
+        })
       }
-    } = this.props
+    })
+  }
+
+  renderProductDetails = () => {
+    const { product } = this.props
+    const { product2 } = this.state
+    const {
+      name,
+      barCode,
+      manufacturer,
+      category,
+      price,
+      stock,
+      expiredStock,
+      status,
+    } = product2 ? product2 : product
     return (
       <div id="productDetails">
         <span><strong>Código: </strong></span>
@@ -54,7 +72,7 @@ class ProductInfo extends Component {
         <h3>Informações do Produto</h3><hr />
         {this.renderProductDetails()}
         <hr />
-        <BatchList productId={product.id} />
+        <BatchList productId={product.id} onSuccess={() => this.fetchProduct()} />
       </Modal>
     )
   }

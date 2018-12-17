@@ -100,7 +100,7 @@ class DiscountForm extends Component {
               </select>
             </div>
             <input type="submit" value="CONCLUIR" onClick={e => this.handleAddDiscounts(e)} />
-            <input type="button" onClick={e => this.props.onCancel(e)} value="Cancel" />
+            <input type="button" onClick={e => this.props.onCancel(e)} value="Cancelar" />
           </form>
         </div>
       </Fragment>

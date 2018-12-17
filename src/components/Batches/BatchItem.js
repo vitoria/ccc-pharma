@@ -13,6 +13,7 @@ class BatchItem extends Component {
     deleteProductBatch(this.props.batch.id).then(response => {
       if (response.status === 200) {
         this.setState({ deleted: true })
+        this.props.onSuccess()
       } 
     })
   }

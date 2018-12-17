@@ -54,14 +54,8 @@ class Products extends Component {
       .catch(error => this.setState({ isLoading: false, data: false, error, showModal: false, showModalDiscount: false }))
   }
 
-  componentDidMount = () => {
-    const token = getToken(this.props.cookies)
-    this.fetchData()
-    getCurrentUser(token).then(response => {
-      if (response.status === 200) {
-        response.json().then(obj => this.setState({ isAdmin: obj.role === 'ADMIN' }))
-      }
-    })
+  componentWillMount = () => {
+    this.setState({ isAdmin: this.props.cookies.get('waza') === 'true'})
   }
 
   addProduct = product => {

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { instanceOf, PropTypes } from 'prop-types'
 import { withCookies, Cookies } from 'react-cookie'
 import { withRouter } from 'react-router-dom'
-import { BASE_URL } from '../../../utils'
+import { BASE_URL, getCurrentUser } from '../../../utils'
 import { path } from 'ramda'
 
 import './global.css'
@@ -39,7 +39,14 @@ class Login extends Component {
             const authorization = response.headers.get('authorization')
             if (response.status === 200 && authorization) {
                 this.props.cookies.set('ccc-pharma-token', authorization)
-                this.props.history.push('/')
+                getCurrentUser(authorization).then(response => {
+                    if (response.status === 200) {
+                        response.json().then(user => {
+                            this.props.cookies.set('waza', user.role === 'ADMIN')
+                            window.location.reload()
+                        })
+                    }
+                })
             } else {
                 this.setState({ error: 'Credenciais inválidas' })
             }

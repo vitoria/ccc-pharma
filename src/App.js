@@ -15,6 +15,13 @@ import Home from './components/Home/index'
 import './App.css'
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      isAdmin: false,
+    }
+  }
+
   static propTypes = {
     cookies: instanceOf(Cookies).isRequired,
     history: PropTypes.shape({
@@ -22,18 +29,23 @@ class App extends Component {
     })
   }
 
+  componentWillMount = () => {
+    this.setState({ isAdmin: this.props.cookies.get('waza') === 'true'})
+  }
+
   render() {
+    const { isAdmin } = this.state
     return (
       <div className="App">
         <Route path="/login" component={Authetication} />
         <Fragment>
           <Header />
           <Container>
-            <Route exact path="/" component={Home} />
+            <Route exact path="/" component={isAdmin ? Home : Products} />
             <Route path="/products" component={Products} />
-            <Route path="/sales" component={Sales} />
-            <Route path="/clients" component={Clients} />
-            <Route path="/employees" component={Employees} />
+            <Route path="/sales" component={isAdmin ? Sales : Products} />
+            <Route path="/clients" component={isAdmin ? Clients : Products} />
+            <Route path="/employees" component={isAdmin ? Employees : Products} />
           </Container>
         </Fragment>
       </div>
