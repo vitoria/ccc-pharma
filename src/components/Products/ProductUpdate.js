@@ -9,7 +9,7 @@ class ProductUpdate extends Component {
     updateProduct(product)
     .then(response => {
       if (response.status === 200) {
-        this.props.onSucces()
+        this.props.onSuccess()
       }
     })
   }

@@ -55,6 +55,7 @@ class Products extends Component {
   }
 
   componentWillMount = () => {
+    this.fetchData()
     this.setState({ isAdmin: this.props.cookies.get('waza') === 'true'})
   }
 

@@ -111,7 +111,7 @@ class ProductItem extends Component {
         {showInfo && <ProductInfo product={product2 ? product2 : product} onClose={() => this.setState({ showInfo: false })} />}
         {showUpdate && <ProductUpdate
         product={product2 ? product2 : product}
-        onSuccuss={() => {
+        onSuccess={() => {
           this.fetchProduct()
           this.setState({ showUpdate: false })
         }}

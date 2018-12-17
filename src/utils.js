@@ -70,7 +70,8 @@ export const updateProduct = (product, token) => fetch(
   `${BASE_URL}/products/${product.id}`, {
     method: 'put',
     headers: {
-      Authorization: token,
+      // Authorization: token,
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(product)
   }
@@ -107,18 +108,15 @@ export const getDiscounts = token => fetch(
   }
 )
 
-export const addDiscount = (discount, token) => {
-  console.log(discount)
-  return fetch(
-    `${BASE_URL}/discount/create`, {
-      method: 'post',
-      headers: {
-        "Content-Type": "application/json; charset=utf8"
-      },
-      body: JSON.stringify(discount)
-    }
-  )
-}
+export const addDiscount = (discount, token) => fetch(
+  `${BASE_URL}/discount/create`, {
+    method: 'post',
+    headers: {
+      "Content-Type": "application/json; charset=utf8"
+    },
+    body: JSON.stringify(discount)
+  }
+)
 
 export const getAdmins = () => fetch(
   `${BASE_URL}/user/admins`
