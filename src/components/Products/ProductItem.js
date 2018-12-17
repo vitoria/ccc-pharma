@@ -3,7 +3,7 @@ import { BASE_URL } from '../../utils'
 
 const categories = {
   MEDICINE: 'Medicamento',
-  COMSMETIC: 'Cosmético',
+  COSMETIC: 'Cosmético',
   FOOD: 'Alimento',
   HYGIENE: 'Higiene'
 }
@@ -20,7 +20,8 @@ class ProductItem extends Component {
 
   handleDeleteProduct = () => {
     fetch(`${BASE_URL}/products/${this.props.product.id}`, {
-      method: 'delete'
+      method: 'delete',
+      Authorization: this.props.token,
     }).then(response => {
       if (response.status === 200) {
         this.setState({ deleted: true })

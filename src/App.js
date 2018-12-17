@@ -27,7 +27,7 @@ class App extends Component {
         <Fragment>
           <Header />
           <Container>
-            <Route exact path="/" render={() => 'Home page'} />
+            <Route exact path="/" component={Sales} />
             <Route path="/products" component={Products} />
             <Route path="/sales" component={Sales} />
             <Route path="/clients" component={Clients} />

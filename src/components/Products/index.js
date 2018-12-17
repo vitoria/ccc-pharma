@@ -1,6 +1,11 @@
 import React, { Component, Fragment } from 'react'
 import { withCookies } from 'react-cookie'
-import { BASE_URL } from '../../utils'
+import {
+  getCurrentUser,
+  getProducts,
+  addProduct,
+  getToken
+} from '../../utils'
 import { map } from 'ramda'
 
 import Modal from '../Modal/index'
@@ -9,13 +14,6 @@ import FetchError from '../FetchError/index'
 import ProductItem from './ProductItem'
 
 import './global.css'
-
-const categories = {
-  MEDICINE: 'Medicamento',
-  COMSMETIC: 'Cosmético',
-  FOOD: 'Alimento',
-  HYGIENE: 'Higiene'
-}
 
 class Products extends Component {
   constructor(props) {
@@ -29,12 +27,14 @@ class Products extends Component {
   }
 
   componentWillMount = () => {
-    fetch(`${BASE_URL}/user/loggedUser`, {
-      headers: {
-        Authorization: this.props.cookies.get('ccc-pharma-token')
-      }
-    }).then(response => response.json())
-    .then(objJSON => console.log(objJSON)).catch(err => console.log(err))
+    const token = this.props.cookies.get('ccc-pharma-token')
+    getCurrentUser(token)
+      .then(response => response.json())
+      .then(objJSON => {
+        const { role } = objJSON
+        role && this.setState({ isAdm: role === 'ADMIN' })
+      })
+      .catch(err => console.log(err))
   }
 
   handleBarCodeChange = e => this.setState({ barCode: e.target.value, errorModal: false })
@@ -47,13 +47,21 @@ class Products extends Component {
     this.fetchData(e.target.value)
   }
 
-  fetchData = (category = 'TODOS') => {
+  fetchData = category => {
     this.setState({ isLoading: true })
-    const url = `${BASE_URL}/products${category !== 'TODOS' ? `/category/${category}` : '/'}`
-    fetch(url, {
-      method: 'get'
-    })
-      .then(response => response.json())
+    getProducts(category)
+      .then(response => {
+        if (response.status === 200) {
+          return response.json()
+        } else {
+          this.setState({
+            isLoading: false,
+            data: false,
+            error: 'Não foi possível carregar a nossa base de dados',
+            showModal: false
+          })
+        }
+      })
       .then(data => {
         this.setState({ isLoading: false, data: data, error: false, showModal: false })
       })
@@ -66,36 +74,32 @@ class Products extends Component {
 
   renderProducts = () => {
     const { data } = this.state
+    const token = getToken(this.props.cookies)
     return data && map(product => (
-      <ProductItem key={product.id} product={product} />
+      <ProductItem key={product.id} product={product} token={token} />
     ), data)
   }
 
   addProduct = event => {
     const { name, barCode, manufacturer, category, price } = this.state
     event.preventDefault()
-    fetch(`${BASE_URL}/products/create`, {
-      method: 'post',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        name,
-        barCode,
-        manufacturer,
-        category,
-        price: parseFloat(price)
-      })
-    }).then(response => {
-      if (response.status === 200) {
-        this.closeModal()
-        this.fetchData()
-      } else {
-        this.setState({ errorModal: 'Não foi possível adicionar o produto', showModal: true })
-      }
-    }).catch(error => {
-      console.log(error)
+    addProduct({
+      name,
+      barCode,
+      manufacturer,
+      category,
+      price: parseFloat(price)
     })
+      .then(response => {
+        if (response.status === 200) {
+          this.closeModal()
+          this.fetchData()
+        } else {
+          this.setState({ errorModal: 'Não foi possível adicionar o produto', showModal: true })
+        }
+      }).catch(error => {
+        console.log(error)
+      })
   }
 
   closeModal = () => {
