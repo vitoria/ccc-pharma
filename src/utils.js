@@ -75,3 +75,22 @@ export const updateProduct = (product, token) => fetch(
     body: JSON.stringify(product)
   }
 )
+
+export const getMissingProducts = token => fetch(
+  `${BASE_URL}/products/unavailable`, {
+    method: 'get',
+    headers: {
+      Authorization: token,
+    }
+  }
+)
+
+export const getLowStockProducts = token => fetch(
+  `${BASE_URL}/products/lowStock`,
+  {
+    method: 'get',
+    headers: {
+      Authorization: token,
+    }
+  }
+)

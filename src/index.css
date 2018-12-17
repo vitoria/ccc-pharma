@@ -216,3 +216,20 @@ button {
 #productDetails > span {
   text-align: start;
 }
+
+.homeItem {
+  width: 25%;
+  background-color: bisque;
+  margin: .5em;
+  padding: 3em;
+  border-radius: 5px;
+}
+.homeItem > h1 {
+  padding: 0px;
+  margin: 0;
+  margin-bottom: .5em;
+}
+
+.w-50 {
+  width: 50%;
+}

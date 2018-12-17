@@ -9,6 +9,7 @@ import Container from './components/Container/index'
 import Products from './components/Products/index'
 import Clients from './components/Clients/index'
 import Sales from './components/Sales/index'
+import Home from './components/Home/index'
 
 import './App.css'
 
@@ -27,7 +28,7 @@ class App extends Component {
         <Fragment>
           <Header />
           <Container>
-            <Route exact path="/" component={Sales} />
+            <Route exact path="/" component={Home} />
             <Route path="/products" component={Products} />
             <Route path="/sales" component={Sales} />
             <Route path="/clients" component={Clients} />
