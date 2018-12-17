@@ -212,3 +212,7 @@ button {
 .AVAILABLE {
   background-color: #45a049;
 }
+
+#productDetails > span {
+  text-align: start;
+}

@@ -22,7 +22,9 @@ class AuthenticationBtn extends Component {
     })
   }
 
-  componentDidUpdate = () => {
+  componentDidMount = () => this.fetchCurrentUser()
+
+  fetchCurrentUser = () => {
     getCurrentUser(this.isLogged())
       .then(response => {
         if (response.status === 200) {
