@@ -122,6 +122,10 @@ export const getClients = () => fetch(
   `${BASE_URL}/user/clients`
 )
 
+export const getEmployees = () => fetch(
+  `${BASE_URL}/user/admins`
+)
+
 export const deleteUser = id => fetch(
   `${BASE_URL}/user/delete/${id}`, {
     method: 'delete'
