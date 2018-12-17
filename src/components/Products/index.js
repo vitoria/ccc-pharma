@@ -57,7 +57,7 @@ class Products extends Component {
     this.fetchData()
     getCurrentUser(token).then(response => {
       if (response.status === 200) {
-        response.json().then(obj => this.setState({isAdmin: obj.role === 'ADMIN'}))
+        response.json().then(obj => this.setState({ isAdmin: obj.role === 'ADMIN' }))
       }
     })
   }
@@ -96,8 +96,7 @@ class Products extends Component {
   )
 
   render() {
-    const { isLoading, error, showModal, filter, data } = this.state
-    console.log('isAdmin: ',this.state.isAdmin)
+    const { isLoading, error, showModal, filter, data, isAdmin } = this.state
     return (
       <div id="productContainer">
         {isLoading ?
@@ -116,10 +115,12 @@ class Products extends Component {
                       <option value="HYGIENE">Higiene</option>
                     </select>
                   </div>
-                  <div className="btn-primary customBtn" id="add" onClick={() => this.setState({ showModal: true })}>
-                    <span className="glyphicon glyphicon-plus" />
-                    <span>Adicionar Produto</span>
-                  </div>
+                  {isAdmin && (
+                    <div className="btn-primary customBtn" id="add" onClick={() => this.setState({ showModal: true })}>
+                      <span className="glyphicon glyphicon-plus" />
+                      <span>Adicionar Produto</span>
+                    </div>
+                  )}
                 </div>
                 {showModal &&
                   <Modal
@@ -128,7 +129,7 @@ class Products extends Component {
                     {this.renderCreateProduct()}
                   </Modal>
                 }
-                <ProductList products={data} />
+                <ProductList products={data} isAdmin={isAdmin} />
               </div>
             )
         }

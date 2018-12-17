@@ -4,13 +4,14 @@ import ProductItem from './ProductItem'
 
 class ProductList extends Component {
   renderProducts = () => {
-    const { products, token } = this.props
+    const { products, isAdmin } = this.props
     return products && map(product => (
-      <ProductItem key={product.id} product={product} token={token} />
+      <ProductItem key={product.id} product={product} isAdmin={isAdmin} />
     ), products)
   }
 
   render() {
+    const { isAdmin } = this.props
     return (
       <table className="table table-striped">
         <thead>
@@ -22,7 +23,7 @@ class ProductList extends Component {
             <th>Quantidade</th>
             <th>Preço(R$)</th>
             <th>Status</th>
-            <th>Opções</th>
+            {isAdmin && <th>Opções</th>}
           </tr>
         </thead>
         <tbody>

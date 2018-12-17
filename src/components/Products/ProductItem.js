@@ -39,6 +39,7 @@ class ProductItem extends Component {
 
   render() {
     const {
+      isAdmin,
       product,
       product: {
         id,
@@ -66,7 +67,8 @@ class ProductItem extends Component {
             {getStatus(status)}
           </span>
         </td>
-        <td>
+        {isAdmin && (
+          <td>
           <div className="btn btn-danger edit" onClick={this.handleDeleteProduct}>
             <i className="fa fa-trash" aria-hidden="true"></i>
           </div>
@@ -79,6 +81,7 @@ class ProductItem extends Component {
             <i className="far fa-eye" aria-hidden="true"></i>
           </div>
         </td>
+        )}
       </tr>
       {showInfo && <ProductInfo product={product} onClose={() => this.setState({ showInfo: false })} />}
       </Fragment>
