@@ -2,14 +2,29 @@ import React, { Component } from 'react'
 import AuthenticationBtn from '../Authetication/AuthenticationBtn/index'
 import SideBar from '../SibeBar/index'
 import { Link } from 'react-router-dom'
+import { withCookies } from 'react-cookie'
+import { getCurrentUser, getToken } from '../../utils'
 
 import './global.css'
 
-export default class Header extends Component {
+class Header extends Component {
   constructor(props) {
     super(props);
-    this.state = { width: 0, height: 0, openSideBar: false };
-    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+    this.state = {
+      width: 0,
+      height: 0,
+      openSideBar: false,
+      user: false,
+    }
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
+  }
+
+  componentWillUpdate = () => {
+    getCurrentUser(getToken(this.props.cookies)).then(response => {
+      if (response.status === 200) {
+        response.json().then(user => this.setState({ user: user }))
+      }
+    })
   }
 
   componentDidMount() {
@@ -30,7 +45,7 @@ export default class Header extends Component {
   }
 
   render() {
-    const { width, openSideBar } = this.state
+    const { width, openSideBar, user } = this.state
     return (
       <div>
         <header>
@@ -42,8 +57,10 @@ export default class Header extends Component {
           </div>
           <AuthenticationBtn />
         </header>
-        <SideBar isOpen={width > 1000 || openSideBar} />
+        <SideBar isOpen={width > 1000 || openSideBar} isAdmin={user.role === 'ADMIN'} />
       </div>
     )
   }
 }
+
+export default withCookies(Header)

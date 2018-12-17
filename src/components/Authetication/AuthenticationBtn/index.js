@@ -22,7 +22,7 @@ class AuthenticationBtn extends Component {
     })
   }
 
-  componentDidMount = () => this.fetchCurrentUser()
+  componentWillUpdate = () => this.fetchCurrentUser()
 
   fetchCurrentUser = () => {
     getCurrentUser(this.isLogged())
