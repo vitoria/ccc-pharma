@@ -3,6 +3,7 @@ import ProductsAlmostMissing from '../ProductsAlmostMissing/index'
 import ProductsMissing from '../ProductsMissing/index'
 
 import { getProducts, getAdmins, getClients } from '../../utils'
+import ProductsAlmostExpired from '../ProductsAlmostExpired/index'
 
 class Home extends Component {
   constructor(props) {
@@ -64,12 +65,15 @@ class Home extends Component {
           </div>
         </div>
         <hr />
-        <div id="homeContainer" className="flex flex-row">
-        <div className="w-50">
+        <div id="homeContainer">
+        <div>
         <ProductsMissing />
         </div>
-        <div className="w-50">
+        <div>
         <ProductsAlmostMissing />
+        </div>
+        <div>
+        <ProductsAlmostExpired />
         </div>
         </div>
       </Fragment>

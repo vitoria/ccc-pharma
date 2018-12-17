@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { getLowStockProducts } from '../../utils'
 import { map } from 'ramda'
 
-class ProductsAlmostMissing extends Component {
+class ProductsAlmostExpired extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -26,7 +26,7 @@ class ProductsAlmostMissing extends Component {
       <tr className="row-content" key={product.id}>
         <td>{product.barCode}</td>
         <td>{product.name}</td>
-        <td>{product.stock}</td>
+        <td>{product.date}</td>
       </tr>
     ), products)
   }
@@ -34,14 +34,14 @@ class ProductsAlmostMissing extends Component {
   render() {
     return (
       <Fragment>
-        <h3>Produtos em Baixa Quantidade</h3>
+        <h3>Produtos Próximo do Vencimento</h3>
         <hr />
         <table className="table table-striped">
           <thead>
             <tr className="row-name">
               <th>Código de Barra</th>
               <th>Nome</th>
-              <th>Quantidade</th>
+              <th>Data de Vencimento</th>
             </tr>
           </thead>
           <tbody>
@@ -53,4 +53,4 @@ class ProductsAlmostMissing extends Component {
   }
 }
 
-export default ProductsAlmostMissing
+export default ProductsAlmostExpired

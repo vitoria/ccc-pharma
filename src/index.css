@@ -241,3 +241,9 @@ button {
   gap: 2em;
   align-items: center;
 }
+
+#homeContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1em;
+}

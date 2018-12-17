@@ -31,7 +31,6 @@ class ProductsMissing extends Component {
   }
 
   render() {
-    const { products } = this.state
     return (
       <Fragment>
         <h3>Produtos em Falta</h3>
