@@ -12,6 +12,7 @@ import Spinner from '../Spinner/index'
 import FetchError from '../FetchError/index'
 import ProductList from './ProductList'
 import ProductForm from './ProductForm'
+import DiscountForm from './DiscountForm'
 
 import './global.css'
 
@@ -95,8 +96,16 @@ class Products extends Component {
     </Fragment>
   )
 
+  renderAddDiscount = () => (
+    <Fragment>
+      <h3>Atribuir Desconto por Categoria</h3>
+      <hr />
+      <DiscountForm onSuccess={this.addProduct} onCancel={() => this.setState({ showModalDiscount: false })} />
+    </Fragment>
+  )
+
   render() {
-    const { isLoading, error, showModal, filter, data, isAdmin } = this.state
+    const { isLoading, error, showModal, showModalDiscount, filter, data, isAdmin } = this.state
     return (
       <div id="productContainer">
         {isLoading ?
@@ -118,7 +127,17 @@ class Products extends Component {
                   {isAdmin && (
                     <div className="btn-primary customBtn" id="add" onClick={() => this.setState({ showModal: true })}>
                       <span className="glyphicon glyphicon-plus" />
+                      &nbsp;
                       <span>Adicionar Produto</span>
+                    </div>
+                  )}
+                  &nbsp;
+                  &nbsp;
+                  {isAdmin && (
+                    <div className="btn-primary customBtn" id="add" onClick={() => this.setState({ showModalDiscount: true })}>
+                      <span className="glyphicon glyphicon-plus" />
+                      &nbsp;
+                      <span>Atribuir Desconto</span>
                     </div>
                   )}
                 </div>
@@ -127,6 +146,13 @@ class Products extends Component {
                     onClose={() => this.setState({ showModal: false })}
                   >
                     {this.renderCreateProduct()}
+                  </Modal>
+                }
+                {showModalDiscount &&
+                  <Modal
+                    onClose={() => this.setState({ showModalDiscount: false })}
+                  >
+                    {this.renderAddDiscount()}
                   </Modal>
                 }
                 <ProductList products={data} isAdmin={isAdmin} />
