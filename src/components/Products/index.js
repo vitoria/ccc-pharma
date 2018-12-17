@@ -1,10 +1,12 @@
 import React, { Component, Fragment } from 'react'
+import { withCookies } from 'react-cookie'
 import { BASE_URL } from '../../utils'
 import { map } from 'ramda'
 
 import Modal from '../Modal/index'
 import Spinner from '../Spinner/index'
 import FetchError from '../FetchError/index'
+import ProductItem from './ProductItem'
 
 import './global.css'
 
@@ -15,9 +17,7 @@ const categories = {
   HYGIENE: 'Higiene'
 }
 
-const getStatus = status => status === 'UNAVAILABLE' ? 'Indisponível' : 'Disponível'
-
-export default class Product extends Component {
+class Product extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -26,6 +26,15 @@ export default class Product extends Component {
       category: 'MEDICINE',
       filter: 'TODOS',
     }
+  }
+
+  componentWillMount = () => {
+    fetch(`${BASE_URL}/user/loggedUser`, {
+      headers: {
+        Authorization: this.props.cookies.get('ccc-pharma-token')
+      }
+    }).then(response => response.json())
+    .then(objJSON => console.log(objJSON)).catch(err => console.log(err))
   }
 
   handleBarCodeChange = e => this.setState({ barCode: e.target.value, errorModal: false })
@@ -58,27 +67,7 @@ export default class Product extends Component {
   renderProducts = () => {
     const { data } = this.state
     return data && map(product => (
-      <tr className="row-content" key={product.id}>
-        <td>{product.name}</td>
-        <td>{product.barCode}</td>
-        <td>{product.manufacturer}</td>
-        <td>{categories[product.category]}</td>
-        <td>{product.status !== 'UNAVAILABLE' ? product.price : '-'}</td>
-        <td>
-          <span className={`badge ${product.status}`}>
-            {getStatus(product.status)}
-          </span>
-        </td>
-        <td>
-          <a className="btn btn-danger edit" href="path/to/settings" aria-label="Settings">
-            <i className="fa fa-trash" aria-hidden="true"></i>
-          </a>
-          &nbsp;
-              <a className="btn btn-info edit" href="path/to/settings" aria-label="Settings">
-            <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-          </a>
-        </td>
-      </tr>
+      <ProductItem key={product.id} product={product} />
     ), data)
   }
 
@@ -212,3 +201,5 @@ export default class Product extends Component {
     )
   }
 }
+
+export default withCookies(Product)
