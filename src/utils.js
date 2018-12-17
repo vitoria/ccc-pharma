@@ -79,9 +79,9 @@ export const updateProduct = (product, token) => fetch(
 export const getMissingProducts = token => fetch(
   `${BASE_URL}/products/unavailable`, {
     method: 'get',
-    headers: {
-      Authorization: token,
-    }
+    // headers: {
+    //   Authorization: token,
+    // }
   }
 )
 
@@ -89,9 +89,9 @@ export const getLowStockProducts = token => fetch(
   `${BASE_URL}/products/lowStock`,
   {
     method: 'get',
-    headers: {
-      Authorization: token,
-    }
+    // headers: {
+    //   Authorization: token,
+    // }
   }
 )
 
@@ -113,3 +113,11 @@ export const addDiscount = (discount, token) => {
     }
   )
 }
+
+export const getAdmins = () => fetch(
+  `${BASE_URL}/user/admins`
+)
+
+export const getClients = () => fetch(
+  `${BASE_URL}/user/clients`
+)
