@@ -8,6 +8,15 @@ import FetchError from '../FetchError/index'
 
 import './global.css'
 
+const categories = {
+  MEDICINE: 'Medicamento',
+  COMSMETIC: 'Cosmético',
+  FOOD: 'Alimento',
+  HYGIENE: 'Higiene'
+}
+
+const getStatus = status => status === 'UNAVAILABLE' ? 'Indisponível' : 'Disponível'
+
 export default class Product extends Component {
   constructor(props) {
     super(props)
@@ -18,7 +27,6 @@ export default class Product extends Component {
       filter: 'TODOS',
     }
   }
-
 
   handleBarCodeChange = e => this.setState({ barCode: e.target.value, errorModal: false })
   handleNameChange = e => this.setState({ name: e.target.value, errorModal: false })
@@ -33,7 +41,6 @@ export default class Product extends Component {
   fetchData = (category = 'TODOS') => {
     this.setState({ isLoading: true })
     const url = `${BASE_URL}/products${category !== 'TODOS' ? `/category/${category}` : '/'}`
-    console.log(url)
     fetch(url, {
       method: 'get'
     })
@@ -50,19 +57,18 @@ export default class Product extends Component {
 
   renderProducts = () => {
     const { data } = this.state
-    const categories = {
-      MEDICINE: 'Medicamento',
-      COMSMETIC: 'Cosmético',
-      FOOD: 'Alimento',
-      HYGIENE: 'Higiene'
-    }
     return data && map(product => (
       <tr className="row-content" key={product.id}>
         <td>{product.name}</td>
         <td>{product.barCode}</td>
         <td>{product.manufacturer}</td>
         <td>{categories[product.category]}</td>
-        <td>{product.price}</td>
+        <td>{product.status !== 'UNAVAILABLE' ? product.price : '-'}</td>
+        <td>
+          <span className={`badge ${product.status}`}>
+            {getStatus(product.status)}
+          </span>
+        </td>
         <td>
           <a className="btn btn-danger edit" href="path/to/settings" aria-label="Settings">
             <i className="fa fa-trash" aria-hidden="true"></i>
@@ -190,7 +196,8 @@ export default class Product extends Component {
                       <th>Código de Barra</th>
                       <th>Fabricante</th>
                       <th>Categoria</th>
-                      <th>Preço(Em R$)</th>
+                      <th>Preço(R$)</th>
+                      <th>Status</th>
                       <th>Opções</th>
                     </tr>
                   </thead>
