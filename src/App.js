@@ -4,10 +4,11 @@ import { instanceOf, PropTypes } from 'prop-types'
 import { withCookies, Cookies } from 'react-cookie'
 
 import Authetication from './components/Authetication/index'
-import Header from './components/Header/index'
 import Container from './components/Container/index'
+import Employees from './components/Employees/index'
 import Products from './components/Products/index'
 import Clients from './components/Clients/index'
+import Header from './components/Header/index'
 import Sales from './components/Sales/index'
 import Home from './components/Home/index'
 
@@ -32,6 +33,7 @@ class App extends Component {
             <Route path="/products" component={Products} />
             <Route path="/sales" component={Sales} />
             <Route path="/clients" component={Clients} />
+            <Route path="/employees" component={Employees} />
           </Container>
         </Fragment>
       </div>
