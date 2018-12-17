@@ -39,9 +39,9 @@ class ProductInfo extends Component {
   }
 
   render() {
-    const { product } = this.props
+    const { product, onClose } = this.props
     return (
-      <Modal>
+      <Modal onClose={onClose}>
         <h3>Informações do Produto</h3><hr />
         {this.renderProductDetails()}
         <hr />

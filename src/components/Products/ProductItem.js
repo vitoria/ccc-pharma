@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { BASE_URL } from '../../utils'
 
 import ProductInfo from './ProductInfo'
@@ -53,6 +53,7 @@ class ProductItem extends Component {
     } = this.props
     const { showInfo } = this.state
     return !this.state.deleted ? (
+      <Fragment>
       <tr className="row-content" key={id}>
         <td>{name}</td>
         <td>{barCode}</td>
@@ -78,8 +79,9 @@ class ProductItem extends Component {
             <i className="far fa-eye" aria-hidden="true"></i>
           </div>
         </td>
-        {showInfo && <ProductInfo product={product} />}
       </tr>
+      {showInfo && <ProductInfo product={product} onClose={() => this.setState({ showInfo: false })} />}
+      </Fragment>
     ) : null
   }
 }
