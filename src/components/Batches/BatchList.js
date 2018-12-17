@@ -38,10 +38,10 @@ class BatchList extends Component {
       .then(response => {
         if (response.status === 200) {
           response.json().then(objJSON => {
-            this.setState({ batches: objJSON, error: false })
+            this.setState({ batches: objJSON, error: false, isAdding: false })
           })
         } else {
-          this.setState({ error: 'Não foi possível carregar' })
+          this.setState({ error: 'Não foi possível carregar', isAdding: false })
         }
       })
       .catch(err => this.setState({ error: err }))

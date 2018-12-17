@@ -22,8 +22,9 @@ class ProductForm extends Component {
 
   onSuccess = event => {
     const { name, barCode, manufacturer, category, price } = this.state
+    const { product } = this.props
     event.preventDefault()
-    this.props.onSuccess({ id: this.props.product.id, name, barCode, manufacturer, category, price })
+    this.props.onSuccess({ id: product && product.id, name, barCode, manufacturer, category, price })
   }
 
   onCancel = event => {

@@ -2,6 +2,15 @@ import React, { Component } from 'react'
 import Modal from '../Modal/index'
 import BatchList from '../Batches/BatchList'
 
+const categories = {
+  MEDICINE: 'Medicamento',
+  COSMETIC: 'Cosmético',
+  FOOD: 'Alimento',
+  HYGIENE: 'Higiene'
+}
+
+const getStatus = status => status === 'UNAVAILABLE' ? 'Indisponível' : 'Disponível'
+
 class ProductInfo extends Component {
   renderProductDetails = () => {
     const {
@@ -25,11 +34,11 @@ class ProductInfo extends Component {
         <span><strong>Fabricante: </strong></span>
         <span>{manufacturer}</span>
         <span><strong>Categoria: </strong></span>
-        <span>{category}</span>
-        <span><strong>Preço: </strong></span>
+        <span>{categories[category]}</span>
+        <span><strong>Preço (R$): </strong></span>
         <span>{price}</span>
         <span><strong>Status: </strong></span>
-        <span>{status}</span>
+        <span>{getStatus(status)}</span>
         <span><strong>Qtd disponível: </strong></span>
         <span>{stock}</span>
         <span><strong>Qtd Vencidos: </strong></span>
