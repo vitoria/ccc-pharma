@@ -8,6 +8,7 @@ import Header from './components/Header/index'
 import Container from './components/Container/index'
 import Products from './components/Products/index'
 import Clients from './components/Clients/index'
+import Sales from './components/Sales/index'
 
 import './App.css'
 
@@ -28,6 +29,7 @@ class App extends Component {
           <Container>
             <Route exact path="/" render={() => 'Home page'} />
             <Route path="/products" component={Products} />
+            <Route path="/sales" component={Sales} />
             <Route path="/clients" component={Clients} />
           </Container>
         </Fragment>

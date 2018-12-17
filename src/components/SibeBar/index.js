@@ -31,7 +31,7 @@ export default class SideBar extends Component {
                     <span>Gerenciar Produtos</span>
                 </Link>
                 <Link
-                    to={{ pathname: "/products" }}
+                    to={{ pathname: "/sales" }}
                     onClick={() => this.setState({selected: 2})}
                     className={selected === 2 ? 'nav-item-selected' : ''}
                 >

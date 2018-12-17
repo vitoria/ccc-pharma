@@ -17,7 +17,7 @@ const categories = {
   HYGIENE: 'Higiene'
 }
 
-class Product extends Component {
+class Products extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -202,4 +202,4 @@ class Product extends Component {
   }
 }
 
-export default withCookies(Product)
+export default withCookies(Products)
