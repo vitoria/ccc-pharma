@@ -43,14 +43,15 @@ class Products extends Component {
             isLoading: false,
             data: false,
             error: 'Não foi possível carregar a nossa base de dados',
-            showModal: false
+            showModal: false,
+            showModalDiscount: false,
           })
         }
       })
       .then(data => {
-        this.setState({ isLoading: false, data: data, error: false, showModal: false })
+        this.setState({ isLoading: false, data: data, error: false, showModal: false, showModalDiscount: false })
       })
-      .catch(error => this.setState({ isLoading: false, data: false, error, showModal: false }))
+      .catch(error => this.setState({ isLoading: false, data: false, error, showModal: false, showModalDiscount: false }))
   }
 
   componentDidMount = () => {
@@ -99,8 +100,7 @@ class Products extends Component {
   renderAddDiscount = () => (
     <Fragment>
       <h3>Atribuir Desconto por Categoria</h3>
-      <hr />
-      <DiscountForm onSuccess={this.addProduct} onCancel={() => this.setState({ showModalDiscount: false })} />
+      <DiscountForm onSuccess={this.fetchData} onCancel={() => this.setState({ showModalDiscount: false })} />
     </Fragment>
   )
 

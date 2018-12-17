@@ -233,3 +233,11 @@ button {
 .w-50 {
   width: 50%;
 }
+
+#discountContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 2em;
+  align-items: center;
+}

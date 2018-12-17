@@ -94,3 +94,22 @@ export const getLowStockProducts = token => fetch(
     }
   }
 )
+
+export const getDiscounts = token => fetch(
+  `${BASE_URL}/discounts`, {
+    method: 'get',
+  }
+)
+
+export const addDiscount = (discount, token) => {
+  console.log(discount)
+  return fetch(
+    `${BASE_URL}/discount/create`, {
+      method: 'post',
+      headers: {
+        "Content-Type": "application/json; charset=utf8"
+      },
+      body: JSON.stringify(discount)
+    }
+  )
+}
