@@ -4,7 +4,7 @@ header {
     position: fixed;
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr auto;
     grid-gap: 1.5em;
     background-color: steelblue;
     color: white;
@@ -19,7 +19,6 @@ header {
 }
 
 #authBtn {
-    grid-column: 2 / 2;
     justify-self: end;
 }
 
@@ -54,4 +53,9 @@ header > * {
 
 .titleHeader > a:hover {
     background-color: rgb(76, 99, 117);
+}
+
+#user {
+    align-self: center;
+    justify-self: end;
 }
