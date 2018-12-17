@@ -19,13 +19,25 @@ export const getProducts = (category = 'TODOS') => fetch(
   }
 )
 
-export const addProduct = product => fetch(
+export const addProduct = ({
+  name,
+  barCode,
+  manufacturer,
+  category,
+  price
+}) => fetch(
   `${BASE_URL}/products/create`,
   {
     method: 'post',
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(product)
+    body: JSON.stringify({
+      name,
+      barCode,
+      manufacturer,
+      category,
+      price: parseFloat(price)
+    })
   }
 )

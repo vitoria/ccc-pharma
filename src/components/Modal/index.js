@@ -7,7 +7,12 @@ class Modal extends Component {
         return (
             <div id="modalContainer">
                 <div id="modal">
-                    <span id="closeBtn" onClick={this.props.onClose} ><i class="fas fa-times"></i></span>
+                    <span
+                        id="closeBtn"
+                        onClick={this.props.onClose}
+                    >
+                        <i className="fas fa-times" />
+                    </span>
                     {this.props.children}
                 </div>
             </div>

@@ -4,14 +4,14 @@ import {
   getCurrentUser,
   getProducts,
   addProduct,
-  getToken
+  getToken,
 } from '../../utils'
-import { map } from 'ramda'
 
 import Modal from '../Modal/index'
 import Spinner from '../Spinner/index'
 import FetchError from '../FetchError/index'
-import ProductItem from './ProductItem'
+import ProductList from './ProductList'
+import ProductForm from './ProductForm'
 
 import './global.css'
 
@@ -21,27 +21,11 @@ class Products extends Component {
     this.state = {
       isLoading: false,
       data: false,
-      category: 'MEDICINE',
+      isAdmin: false,
       filter: 'TODOS',
     }
   }
 
-  componentWillMount = () => {
-    const token = this.props.cookies.get('ccc-pharma-token')
-    getCurrentUser(token)
-      .then(response => response.json())
-      .then(objJSON => {
-        const { role } = objJSON
-        role && this.setState({ isAdm: role === 'ADMIN' })
-      })
-      .catch(err => console.log(err))
-  }
-
-  handleBarCodeChange = e => this.setState({ barCode: e.target.value, errorModal: false })
-  handleNameChange = e => this.setState({ name: e.target.value, errorModal: false })
-  handleManufacturerChange = e => this.setState({ manufacturer: e.target.value, errorModal: false })
-  handleCategoryChange = e => this.setState({ category: e.target.value, errorModal: false })
-  handlePriceChange = e => this.setState({ price: e.target.value, errorModal: false })
   handleFilterChange = e => {
     this.setState({ filter: e.target.value })
     this.fetchData(e.target.value)
@@ -69,27 +53,17 @@ class Products extends Component {
   }
 
   componentDidMount = () => {
-    this.fetchData()
-  }
-
-  renderProducts = () => {
-    const { data } = this.state
     const token = getToken(this.props.cookies)
-    return data && map(product => (
-      <ProductItem key={product.id} product={product} token={token} />
-    ), data)
+    this.fetchData()
+    getCurrentUser(token).then(response => {
+      if (response.status === 200) {
+        response.json().then(obj => this.setState({isAdmin: obj.role === 'ADMIN'}))
+      }
+    })
   }
 
-  addProduct = event => {
-    const { name, barCode, manufacturer, category, price } = this.state
-    event.preventDefault()
-    addProduct({
-      name,
-      barCode,
-      manufacturer,
-      category,
-      price: parseFloat(price)
-    })
+  addProduct = product => {
+    addProduct(product)
       .then(response => {
         if (response.status === 200) {
           this.closeModal()
@@ -114,44 +88,16 @@ class Products extends Component {
     })
   }
 
-  renderProducForm = () => {
-    const { name, barCode, manufacturer, category, price, errorModal } = this.state
-    return (
-      <form onSubmit={e => this.addProduct(e)}>
-        <label htmlFor="nameProduct">Nome</label>
-        <input id="nameProduct" value={name} onChange={e => this.handleNameChange(e)}></input>
-        <label htmlFor="barCodeProduct">Código de Barras</label>
-        <input id="barCodeProduct" value={barCode} onChange={e => this.handleBarCodeChange(e)}></input>
-        <label htmlFor="manufacturerProduct">Fabricante</label>
-        <input id="manufacturerProduct" value={manufacturer} onChange={e => this.handleManufacturerChange(e)}></input>
-        <label htmlFor="categoryProduct">Categoria</label>
-        <select id="categoryProduct" value={category} onChange={e => this.handleCategoryChange(e)}>
-          <option value="MEDICINE">Medicamento</option>
-          <option value="COSMETIC">Cosmético</option>
-          <option value="FOOD">Alimento</option>
-          <option value="HYGIENE">Higiene</option>
-        </select>
-        <label htmlFor="priceProduct">Preço</label>
-        <input id="priceProduct" value={price} onChange={e => this.handlePriceChange(e)}></input>
-        {errorModal && (
-          <FetchError msg={`${errorModal}`} />
-        )}
-        <input type="submit" value="Cadastrar" />
-        <input type="button" onClick={this.closeModal} value="Cancel" />
-      </form>
-    )
-  }
-
   renderCreateProduct = () => (
     <Fragment>
       <h3>Cadastro de Produto</h3>
-      {this.renderProducForm()}
+      <ProductForm onSuccess={this.addProduct} onCancel={this.closeModal} />
     </Fragment>
   )
 
   render() {
-    const { isLoading, error, showModal, filter } = this.state
-    const productsRended = this.renderProducts()
+    const { isLoading, error, showModal, filter, data } = this.state
+    console.log('isAdmin: ',this.state.isAdmin)
     return (
       <div id="productContainer">
         {isLoading ?
@@ -182,22 +128,7 @@ class Products extends Component {
                     {this.renderCreateProduct()}
                   </Modal>
                 }
-                <table className="table table-striped">
-                  <thead>
-                    <tr className="row-name">
-                      <th>Nome</th>
-                      <th>Código de Barra</th>
-                      <th>Fabricante</th>
-                      <th>Categoria</th>
-                      <th>Preço(R$)</th>
-                      <th>Status</th>
-                      <th>Opções</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {productsRended}
-                  </tbody>
-                </table>
+                <ProductList products={data} />
               </div>
             )
         }
