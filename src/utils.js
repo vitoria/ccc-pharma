@@ -41,3 +41,27 @@ export const addProduct = ({
     })
   }
 )
+
+export const getProductBatches = productId => fetch(
+  `${BASE_URL}/batches/product/${productId}`,
+  {
+    method: 'get'
+  }
+)
+
+export const addProductBatch = (productId, batch) => {
+  const { quantity, expirationDate } = batch
+  return fetch(
+    `${BASE_URL}/batches/create/?productId=${productId}&quantity=${quantity}&expirationDate=${expirationDate}`,
+    {
+      method: 'post'
+    }
+  )
+}
+
+export const deleteProductBatch = batchId => fetch(
+  `${BASE_URL}/batches/delete/${batchId}`,
+  {
+    method: 'delete'
+  }
+)

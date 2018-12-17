@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { BASE_URL } from '../../utils'
 
+import ProductInfo from './ProductInfo'
+
 const categories = {
   MEDICINE: 'Medicamento',
   COSMETIC: 'Cosmético',
@@ -31,8 +33,13 @@ class ProductItem extends Component {
     }).catch(err => console.log(err))
   }
 
+  handleInfoProduct = () => {
+    this.setState({ showInfo: true })
+  }
+
   render() {
     const {
+      product,
       product: {
         id,
         barCode,
@@ -41,15 +48,17 @@ class ProductItem extends Component {
         category,
         status,
         price,
+        stock,
       }
     } = this.props
-    console.log(this.state)
+    const { showInfo } = this.state
     return !this.state.deleted ? (
       <tr className="row-content" key={id}>
         <td>{name}</td>
         <td>{barCode}</td>
         <td>{manufacturer}</td>
         <td>{categories[category]}</td>
+        <td>{status !== 'UNAVAILABLE' ? stock : '-'}</td>
         <td>{status !== 'UNAVAILABLE' ? price : '-'}</td>
         <td>
           <span className={`badge ${status}`}>
@@ -61,10 +70,15 @@ class ProductItem extends Component {
             <i className="fa fa-trash" aria-hidden="true"></i>
           </div>
           &nbsp;
-              <div className="btn btn-info edit">
+          <div className="btn btn-warning edit">
             <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
           </div>
+          &nbsp;
+          <div className="btn btn-info edit" onClick={this.handleInfoProduct}>
+            <i className="far fa-eye" aria-hidden="true"></i>
+          </div>
         </td>
+        {showInfo && <ProductInfo product={product} />}
       </tr>
     ) : null
   }

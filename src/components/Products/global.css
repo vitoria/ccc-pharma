@@ -111,3 +111,11 @@ a.btn-top:hover
     width:10%;
 }
 /* Table css End */
+
+#productDetails {
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr 2fr;
+    grid-template-rows: repeat(3, 1fr);
+    grid-gap: .25em;
+    margin-bottom: 1em;
+}

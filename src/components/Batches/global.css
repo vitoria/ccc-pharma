@@ -1,0 +1,9 @@
+#addBatchContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    grid-gap: .25em;
+}
+
+#addBatchContainer > input {
+    padding: .3em .25em .3em .25em;
+}

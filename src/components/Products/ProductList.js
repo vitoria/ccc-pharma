@@ -19,6 +19,7 @@ class ProductList extends Component {
             <th>Código de Barra</th>
             <th>Fabricante</th>
             <th>Categoria</th>
+            <th>Quantidade</th>
             <th>Preço(R$)</th>
             <th>Status</th>
             <th>Opções</th>

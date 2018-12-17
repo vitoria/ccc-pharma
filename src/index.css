@@ -138,6 +138,10 @@ a > span {
   flex-direction: row-reverse;
 }
 
+.flex-column {
+  flex-direction: column;
+}
+
 .w-100 {
   width: 100%;
 }
@@ -171,7 +175,7 @@ label {
   cursor: pointer;
 }
 
-input, select, .customBtn {
+input, select, .customBtn, #add {
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
