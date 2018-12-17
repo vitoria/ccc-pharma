@@ -61,45 +61,45 @@ class ProductItem extends Component {
     const { showInfo, showUpdate } = this.state
     return !this.state.deleted ? (
       <Fragment>
-      <tr className="row-content" key={id}>
-        <td>{name}</td>
-        <td>{barCode}</td>
-        <td>{manufacturer}</td>
-        <td>{categories[category]}</td>
-        <td>{status !== 'UNAVAILABLE' ? stock : '-'}</td>
-        <td>{status !== 'UNAVAILABLE' ? (
-          sellingPrice !== listingPrice ? (
-            <div className="flex flex-column">
-              <span><strike>{listingPrice.toFixed(2)}</strike></span>
-              <span>{sellingPrice.toFixed(2)}</span>
-            </div>
-          ) : (
-            <span>{sellingPrice.toFixed(2)}</span>
-          )
-        ) : '-'}</td>
-        <td>
-          <span className={`badge ${status}`}>
-            {getStatus(status)}
-          </span>
-        </td>
-        {isAdmin && (
+        <tr className="row-content" key={id}>
+          <td>{name}</td>
+          <td>{barCode}</td>
+          <td>{manufacturer}</td>
+          <td>{categories[category]}</td>
+          <td>{status !== 'UNAVAILABLE' ? stock : '-'}</td>
+          <td>{status !== 'UNAVAILABLE' ? (
+            sellingPrice !== listingPrice ? (
+              <div className="flex flex-column">
+                <span><strike>{listingPrice.toFixed(2)}</strike></span>
+                <span>{sellingPrice.toFixed(2)}</span>
+              </div>
+            ) : (
+                <span>{sellingPrice.toFixed(2)}</span>
+              )
+          ) : '-'}</td>
           <td>
-          <div className="btn btn-danger edit" onClick={this.handleDeleteProduct}>
-            <i className="fa fa-trash" aria-hidden="true"></i>
-          </div>
-          &nbsp;
+            <span className={`badge ${status}`}>
+              {getStatus(status)}
+            </span>
+          </td>
+          {isAdmin && (
+            <td>
+              <div className="btn btn-danger edit" onClick={this.handleDeleteProduct}>
+                <i className="fa fa-trash" aria-hidden="true"></i>
+              </div>
+              &nbsp;
           <div className="btn btn-warning edit" onClick={this.handleUpdateProduct}>
-            <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-          </div>
-          &nbsp;
+                <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+              </div>
+              &nbsp;
           <div className="btn btn-info edit" onClick={this.handleInfoProduct}>
-            <i className="far fa-eye" aria-hidden="true"></i>
-          </div>
-        </td>
-        )}
-      </tr>
-      {showInfo && <ProductInfo product={product} onClose={() => this.setState({ showInfo: false })} />}
-      {showUpdate && <ProductUpdate product={product} onClose={() => this.setState({ showUpdate: false })} />}
+                <i className="far fa-eye" aria-hidden="true"></i>
+              </div>
+            </td>
+          )}
+        </tr>
+        {showInfo && <ProductInfo product={product} onClose={() => this.setState({ showInfo: false })} />}
+        {showUpdate && <ProductUpdate product={product} onClose={() => this.setState({ showUpdate: false })} />}
       </Fragment>
     ) : null
   }

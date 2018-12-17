@@ -121,3 +121,18 @@ export const getAdmins = () => fetch(
 export const getClients = () => fetch(
   `${BASE_URL}/user/clients`
 )
+
+export const deleteUser = id => fetch(
+  `${BASE_URL}/user/delete/${id}`, {
+    method: 'delete'
+  }
+)
+
+export const createUser = user => fetch(
+  `${BASE_URL}/user/create`, {
+    method: 'post',
+    body: JSON.stringify(user),
+    headers: {
+      "Content-Type": "application/json",
+    }
+  })
