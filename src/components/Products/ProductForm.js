@@ -4,12 +4,13 @@ import FetchError from '../FetchError/index'
 class ProductForm extends Component {
   constructor(props) {
     super(props)
+    const { product } = props
     this.state = {
       category: 'MEDICINE',
-      name: '',
-      price: '',
-      manufacturer: '',
-      barCode: '',
+      name: product ? product.name : '',
+      price: product ? product.price : '',
+      manufacturer: product ? product.manufacturer : '',
+      barCode: product ? product.barCode : '',
     }
   }
 
@@ -22,7 +23,7 @@ class ProductForm extends Component {
   onSuccess = event => {
     const { name, barCode, manufacturer, category, price } = this.state
     event.preventDefault()
-    this.props.onSuccess({ name, barCode, manufacturer, category, price })
+    this.props.onSuccess({ id: this.props.product.id, name, barCode, manufacturer, category, price })
   }
 
   onCancel = event => {
@@ -32,12 +33,13 @@ class ProductForm extends Component {
 
   render() {
     const { name, barCode, manufacturer, category, price, errorModal } = this.state
+    const { product } = this.props
     return (
       <form onSubmit={e => this.onSuccess(e)}>
         <label htmlFor="nameProduct">Nome</label>
         <input type="text" id="nameProduct" value={name} onChange={e => this.handleNameChange(e)}></input>
         <label htmlFor="barCodeProduct">Código de Barras</label>
-        <input type="text" id="barCodeProduct" value={barCode} onChange={e => this.handleBarCodeChange(e)}></input>
+        <input type="text" id="barCodeProduct" disabled={product} value={barCode} onChange={e => this.handleBarCodeChange(e)}></input>
         <label htmlFor="manufacturerProduct">Fabricante</label>
         <input type="text" id="manufacturerProduct" value={manufacturer} onChange={e => this.handleManufacturerChange(e)}></input>
         <label htmlFor="categoryProduct">Categoria</label>
@@ -52,7 +54,7 @@ class ProductForm extends Component {
         {errorModal && (
           <FetchError msg={`${errorModal}`} />
         )}
-        <input type="submit" value="Cadastrar" />
+        <input type="submit" value={product ? "EDITAR" : "Cadastrar"} />
         <input type="button" onClick={e => this.onCancel(e)} value="Cancel" />
       </form>
     )

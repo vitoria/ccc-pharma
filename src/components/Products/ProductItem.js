@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { BASE_URL } from '../../utils'
 
 import ProductInfo from './ProductInfo'
+import ProductUpdate from './ProductUpdate'
 
 const categories = {
   MEDICINE: 'Medicamento',
@@ -37,6 +38,10 @@ class ProductItem extends Component {
     this.setState({ showInfo: true })
   }
 
+  handleUpdateProduct = () => {
+    this.setState({ showUpdate: true })
+  }
+
   render() {
     const {
       isAdmin,
@@ -52,7 +57,7 @@ class ProductItem extends Component {
         stock,
       }
     } = this.props
-    const { showInfo } = this.state
+    const { showInfo, showUpdate } = this.state
     return !this.state.deleted ? (
       <Fragment>
       <tr className="row-content" key={id}>
@@ -73,7 +78,7 @@ class ProductItem extends Component {
             <i className="fa fa-trash" aria-hidden="true"></i>
           </div>
           &nbsp;
-          <div className="btn btn-warning edit">
+          <div className="btn btn-warning edit" onClick={this.handleUpdateProduct}>
             <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
           </div>
           &nbsp;
@@ -84,6 +89,7 @@ class ProductItem extends Component {
         )}
       </tr>
       {showInfo && <ProductInfo product={product} onClose={() => this.setState({ showInfo: false })} />}
+      {showUpdate && <ProductUpdate product={product} onClose={() => this.setState({ showUpdate: false })} />}
       </Fragment>
     ) : null
   }

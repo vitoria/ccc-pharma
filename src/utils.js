@@ -65,3 +65,13 @@ export const deleteProductBatch = batchId => fetch(
     method: 'delete'
   }
 )
+
+export const updateProduct = (product, token) => fetch(
+  `${BASE_URL}/products/${product.id}`, {
+    method: 'put',
+    headers: {
+      Authorization: token,
+    },
+    body: JSON.stringify(product)
+  }
+)
