@@ -53,7 +53,8 @@ class ProductItem extends Component {
         manufacturer,
         category,
         status,
-        price,
+        sellingPrice,
+        listingPrice,
         stock,
       }
     } = this.props
@@ -66,7 +67,16 @@ class ProductItem extends Component {
         <td>{manufacturer}</td>
         <td>{categories[category]}</td>
         <td>{status !== 'UNAVAILABLE' ? stock : '-'}</td>
-        <td>{status !== 'UNAVAILABLE' ? price : '-'}</td>
+        <td>{status !== 'UNAVAILABLE' ? (
+          sellingPrice !== listingPrice ? (
+            <div className="flex flex-column">
+              <span><strike>{listingPrice.toFixed(2)}</strike></span>
+              <span>{sellingPrice.toFixed(2)}</span>
+            </div>
+          ) : (
+            <span>{sellingPrice.toFixed(2)}</span>
+          )
+        ) : '-'}</td>
         <td>
           <span className={`badge ${status}`}>
             {getStatus(status)}
