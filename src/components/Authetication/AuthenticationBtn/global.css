@@ -8,6 +8,14 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+#authBtn {
+    padding: 1em;
+}
+
+#authBtn:hover {
+    background-color: rgb(76, 99, 117);
+}
+
 #authBtn a {
     color: white;
 }

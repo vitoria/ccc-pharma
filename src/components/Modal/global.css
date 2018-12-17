@@ -1,0 +1,38 @@
+#modal {
+    top: 1%;
+    min-width: 42em;
+    max-width: 100%;
+    width: min-content;
+    padding: 3em;
+    height: min-content;
+    background-color: white;
+    box-shadow: 0 0 4px 2px rgba( 0, 0, 0, .2 );
+    border-radius: 3px;
+    position: relative;
+}
+
+#modalContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.325);
+    display: flex;
+    justify-content: center;
+    padding-top: 6em;
+    z-index: 9;
+}
+
+#modal > #closeBtn {
+    padding: 1em;
+    position: absolute;
+    right: 2em;
+    top: 1em;
+    color: darkgrey;
+}
+
+#modal > #closeBtn:hover {
+    color: red;
+    cursor: pointer;
+}

@@ -1,0 +1,121 @@
+/* Table css Start */
+a.del
+{
+    background:#d9534f;
+    border-radius: 2px; 
+    width: 35px;
+    height:28px; 
+    padding-left:12px;
+    line-height:10px;
+}
+
+a.edit
+{
+    padding-left:10px;
+    background:#337ab7;
+    color:#fff;
+    border-radius:2px;
+    border:none;
+}
+
+tr.row-name
+{
+    font-size: 18px;
+    color:steelblue;
+}
+
+tr.row-content
+{
+    color:#6c7173;
+    text-align: start;
+}
+
+table
+{
+    border-bottom: 8px solid steelblue;
+}
+
+td.check
+{
+    text-align: center;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd)
+{
+    background:#F0F2F2 !important; 
+}
+
+a.btn-danger:hover
+{
+    background: #de6c69;
+}
+
+a.btn-danger
+{
+    background:#d9534f;  
+}
+
+.addButton{
+    display:block;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background: steelblue;
+    color: white;
+    text-align: center;
+    font-size: 23px;
+    position: relative;
+    top: 1%;
+    left: 89.5%;
+}
+
+a.btn-top
+{
+    background:#448aff;
+    color:#fff;
+    border:1px solid #448aff; 
+    padding: 7px 10px; 
+    border-radius:4px; 
+}
+
+a.btn-top:hover
+{
+    text-decoration: none;
+    box-shadow:3px 3px 5px #222; 
+    transition:box-shadow 0.5s; 
+}
+
+#productContainer table div ul{
+    margin-top: 17px;
+}
+
+#productContainer table div a{
+    margin-right: 15px;
+}
+
+#productContainer h1{
+    color: steelblue;
+    text-align: center;
+}
+
+#header{
+    text-align: start;
+    color: steelblue;
+}
+
+#th1{
+    width:12%;
+}
+
+#th2{
+    width:10%;
+}
+/* Table css End */
+
+#productDetails {
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr 2fr;
+    grid-template-rows: repeat(3, 1fr);
+    grid-gap: .25em;
+    margin-bottom: 1em;
+}
