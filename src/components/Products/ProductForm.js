@@ -26,8 +26,12 @@ class ProductForm extends Component {
     event.preventDefault()
     if ( name === '' || barCode === '' || manufacturer === '' || price === '') {
       this.setState({ errorModal: 'Preencha todas informações' })
-    } else
-    this.props.onSuccess({ id: product && product.id, name, barCode, manufacturer, category, price, status: this.props.product.status })
+    } else {
+      this.props.product ?
+      this.props.onSuccess({ id: product && product.id, name, barCode, manufacturer, category, price, status: this.props.product.status })
+      : this.props.onSuccess({ id: product && product.id, name, barCode, manufacturer, category, price })
+
+    }
   }
 
   onCancel = event => {
